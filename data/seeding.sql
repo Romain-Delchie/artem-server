@@ -18,9 +18,9 @@ INSERT INTO "delivery" ("delivery_address", "account_id")
 VALUES
   ('Boulangerie Mon client, 10 rue du client, 75012 Paris', 1);
 
-INSERT INTO "quotation" ("shipment", "account_id")
+INSERT INTO "quotation" ("shipment", "account_id", "reference")
 VALUES
-  (true, 1);
+  (true, 1, 'Boulangerie Thiago');
 
 INSERT INTO "range" ("name", "description", "image_link")
 VALUES

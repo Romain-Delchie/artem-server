@@ -38,6 +38,7 @@ CREATE TABLE "quotation" (
   "creation_date" DATE NOT NULL DEFAULT CURRENT_DATE,
   "expiration_date" DATE,
   "shipment" BOOLEAN,
+  "reference" TEXT,
   "account_id" INT NOT NULL REFERENCES "account"("id") ON DELETE CASCADE
 );
 
@@ -67,6 +68,7 @@ CREATE TABLE "product" (
 CREATE TABLE "quotation_has_product" (
   "quotation_id" INT REFERENCES "quotation"("id") ON DELETE CASCADE,
   "product_id" INT REFERENCES "product"("id") ON DELETE CASCADE,
+  "reference" TEXT,
   PRIMARY KEY("quotation_id", "product_id"),
   "quantity" NUMERIC(10, 2) NOT NULL
 );
