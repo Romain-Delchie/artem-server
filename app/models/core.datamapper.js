@@ -35,7 +35,7 @@ module.exports = class CoreDatamapper {
        */
     async findAll() {
       const result = await this.client.query(`SELECT * FROM "${this.tableName}"`);
-  
+  console.log(result.rows)
       return result.rows;
     }
   

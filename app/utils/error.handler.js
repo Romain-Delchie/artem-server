@@ -12,6 +12,6 @@ module.exports = (err, req, res, next) => {
 
   // Par défaut
   return res.status(500).json({
-    error: err.message,
+    error: err.message
   });
 };
