@@ -68,7 +68,7 @@ productRouter.route('/:id(\\d+)')
  * @return {product} 200 - Le produit modifié
  * @return {object} 403 - L'utilisateur n'a pas les droits pour modifier ce produit
  */
-  .patch(validate(updateProductSchema, 'body'), controllerWrapper(productControler.patchproduct))
+  .patch(validate(updateProductSchema, 'body'), controllerWrapper(productControler.patchProduct))
 
   /**
  * DELETE /product/{id}
