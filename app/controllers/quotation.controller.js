@@ -17,7 +17,7 @@ const quotationController = {
 
   
   async getOneQuotation(req, res) {
-    const oneQuotation = await quotation.findByPk(req.params.id);
+    const oneQuotation = await quotation.findQuotationById(req.params.id);
     if (!oneQuotation) {
         throw new ArtemError('Quotation not found', 404);
     }

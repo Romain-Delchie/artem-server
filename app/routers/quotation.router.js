@@ -55,7 +55,7 @@ quotationRouter.route('/:id(\\d+)')
  * DELETE /quotation/{id}
  * @tags Quotation
  * @summary supprime un devis
- * @param {number} query.id.required - id du rappel
+ * @param {number} query.id.required - id du devis
  * @return {object} 204 - Le devis a été supprimé
  * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce devis
  */
