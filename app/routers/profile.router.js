@@ -1,5 +1,5 @@
 const express = require('express');
-const profilControler = require('../controllers/profile.controller');
+const profilController = require('../controllers/profile.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
 const authMiddleware = require('../middlewares/auth.middleware');
 const validate = require('../middlewares/validation.middleware');
@@ -16,7 +16,7 @@ profileRouter.route('/')
  * @return {account} 200 - Les données du compte de l’utilisateur connecté
  * @return {object} 404 - L'utilisateur n'a pas été trouvé
  */
-  .get(authMiddleware.checkToken, controllerWrapper(profilControler.getProfile))
+  .get(authMiddleware.checkToken, controllerWrapper(profilController.getProfile))
   /**
   * PATCH /profile
   * @tags Profile
@@ -32,7 +32,7 @@ profileRouter.route('/')
   * @return {account} 200 - Les données du compte de l’utilisateur après modification
   * @return {object} 400 - Erreur de validation des données en entrée
   */
-  .patch(authMiddleware.checkToken, validate(updateProfileSchema, 'body'), controllerWrapper(profilControler.updateProfile))
+  .patch(authMiddleware.checkToken, validate(updateProfileSchema, 'body'), controllerWrapper(profilController.updateProfile))
   /**
   *DELETE /profile
   * @tags Profile
@@ -40,6 +40,6 @@ profileRouter.route('/')
   * @return {object} 204 - Compte supprimé
   * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce compte
   */    
-  .delete(authMiddleware.checkToken, controllerWrapper(profilControler.deleteProfile));
+  .delete(authMiddleware.checkToken, controllerWrapper(profilController.deleteProfile));
 
 module.exports = profileRouter;

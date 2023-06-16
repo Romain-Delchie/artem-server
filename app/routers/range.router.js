@@ -1,9 +1,9 @@
 const express = require('express');
-const rangeControler = require('../controllers/range.controller');
+const rangeController = require('../controllers/range.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
 const validate = require('../middlewares/validation.middleware');
 const addRangeSchema = require('../validation/add-range.validation');
-const updateProductSchema = require('../validation/update-range.validation');
+const updateRangeSchema = require('../validation/update-range.validation');
 const authMiddleware = require('../middlewares/auth.middleware');
 
 const rangeRouter = express.Router();
@@ -16,7 +16,7 @@ rangeRouter.route('/')
   * @summary Renvoi tous les gammes de produit
   * @return {[range]} 200 - ranges Un tableau des gammes de produit
   */
-  .get(authMiddleware.checkToken, controllerWrapper(rangeControler.getRanges))
+  .get(authMiddleware.checkToken, controllerWrapper(rangeController.getRanges))
 /**
  * POST /range
  * @tags Range
@@ -28,7 +28,7 @@ rangeRouter.route('/')
  * @return {object} 400 - erreur de validation des données en entrée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour créer cette gamme
  */
-  .post(validate(addRangeSchema, 'body'), controllerWrapper(rangeControler.addRange));
+  .post(validate(addRangeSchema, 'body'), controllerWrapper(rangeController.addRange));
 
 rangeRouter.route('/:id(\\d+)')
 /**
@@ -38,7 +38,7 @@ rangeRouter.route('/:id(\\d+)')
  * @param {number} query.id.required - id de la gamme
  * @return {[range]} 200 - range : La gamme recherchée
  */
-  .get(controllerWrapper(rangeControler.getOneRange))
+  .get(controllerWrapper(rangeController.getOneRange))
 /**
  * PATCH /range/{id}
  * @tags Range
@@ -50,7 +50,7 @@ rangeRouter.route('/:id(\\d+)')
  * @return {range} 200 - La gamme a été mise à jour
  * @return {object} 403 - L'utilisateur n'a pas les droits pour modifier cette gamme
  */
-  .patch(validate(updateRangeSchema, 'body'), controllerWrapper(rangeControler.patchRange))
+  .patch(validate(updateRangeSchema, 'body'), controllerWrapper(rangeController.patchRange))
 
   /**
  * DELETE /range/{id}
@@ -60,6 +60,6 @@ rangeRouter.route('/:id(\\d+)')
  * @return {object} 204 - La gamme a été supprimée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer cette gamme
  */
-  .delete(controllerWrapper(rangeControler.deleteRange));
+  .delete(controllerWrapper(rangeController.deleteRange));
 
 module.exports = rangeRouter;

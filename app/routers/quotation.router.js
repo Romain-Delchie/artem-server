@@ -1,5 +1,5 @@
 const express = require('express');
-const quotationControler = require('../controllers/quotation.controller');
+const quotationController = require('../controllers/quotation.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
 const validate = require('../middlewares/validation.middleware');
 const addQuotationSchema = require('../validation/add-quotation.validation');
@@ -16,7 +16,7 @@ quotationRouter.route('/')
   * @summary Renvoi les devis de l’utilisateur connecté
   * @return {[quotation]} 200 - quotations Un tableau de devis
   */
-  .get(authMiddleware.checkToken, controllerWrapper(quotationControler.getQuotations))
+  .get(authMiddleware.checkToken, controllerWrapper(quotationController.getQuotations))
 /**
  * POST /quotation
  * @tags Quotation
@@ -28,7 +28,7 @@ quotationRouter.route('/')
  * @return {object} 400 - erreur de validation des données en entrée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour créer un devis sur cet utilisateur
  */
-  .post(validate(addQuotationSchema, 'body'), controllerWrapper(quotationControler.addQuotation));
+  .post(validate(addQuotationSchema, 'body'), controllerWrapper(quotationController.addQuotation));
 
 quotationRouter.route('/:id(\\d+)')
 /**
@@ -38,7 +38,7 @@ quotationRouter.route('/:id(\\d+)')
  * @param {number} query.id.required - id du devis
  * @return {[quotation]} 200 - quotations Un tableau de devis
  */
-  .get(controllerWrapper(quotationControler.getOneQuotation))
+  .get(controllerWrapper(quotationController.getOneQuotation))
 /**
  * PATCH /quotation/{id}
  * @tags Quotation
@@ -49,7 +49,7 @@ quotationRouter.route('/:id(\\d+)')
  * @return {quotation} 200 - Le devis modifié
  * @return {object} 403 - L'utilisateur n'a pas les droits pour modifier ce devis
  */
-  .patch(validate(updateQuotationSchema, 'body'), controllerWrapper(quotationControler.patchQuotation))
+  .patch(validate(updateQuotationSchema, 'body'), controllerWrapper(quotationController.patchQuotation))
 
   /**
  * DELETE /quotation/{id}
@@ -59,6 +59,6 @@ quotationRouter.route('/:id(\\d+)')
  * @return {object} 204 - Le devis a été supprimé
  * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce devis
  */
-  .delete(controllerWrapper(quotationControler.deleteQuotation));
+  .delete(controllerWrapper(quotationController.deleteQuotation));
 
 module.exports = quotationRouter;

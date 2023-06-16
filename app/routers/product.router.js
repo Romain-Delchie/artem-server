@@ -1,5 +1,5 @@
 const express = require('express');
-const productControler = require('../controllers/product.controller');
+const productController = require('../controllers/product.controller');
 const controllerWrapper = require('../utils/controller-wrapper');
 const validate = require('../middlewares/validation.middleware');
 const addProductSchema = require('../validation/add-product.validation');
@@ -16,7 +16,7 @@ productRouter.route('/')
   * @summary Renvoi tous les produits
   * @return {[product]} 200 - products Un tableau de produits
   */
-  .get(authMiddleware.checkToken, controllerWrapper(productControler.getProducts))
+  .get(authMiddleware.checkToken, controllerWrapper(productController.getProducts))
 /**
  * POST /product
  * @tags Product
@@ -37,7 +37,7 @@ productRouter.route('/')
  * @return {object} 400 - erreur de validation des données en entrée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour créer ce produit
  */
-  .post(validate(addProductSchema, 'body'), controllerWrapper(productControler.addProduct));
+  .post(validate(addProductSchema, 'body'), controllerWrapper(productController.addProduct));
 
 productRouter.route('/:id(\\d+)')
 /**
@@ -47,7 +47,7 @@ productRouter.route('/:id(\\d+)')
  * @param {number} query.id.required - id du produit
  * @return {[produit]} 200 - product : Le produit recherché
  */
-  .get(controllerWrapper(productControler.getOneProduct))
+  .get(controllerWrapper(productController.getOneProduct))
 /**
  * PATCH /product/{id}
  * @tags Product
@@ -68,7 +68,7 @@ productRouter.route('/:id(\\d+)')
  * @return {product} 200 - Le produit modifié
  * @return {object} 403 - L'utilisateur n'a pas les droits pour modifier ce produit
  */
-  .patch(validate(updateProductSchema, 'body'), controllerWrapper(productControler.patchProduct))
+  .patch(validate(updateProductSchema, 'body'), controllerWrapper(productController.patchProduct))
 
   /**
  * DELETE /product/{id}
@@ -78,6 +78,6 @@ productRouter.route('/:id(\\d+)')
  * @return {object} 204 - Le produit a été supprimé
  * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce produit
  */
-  .delete(controllerWrapper(productControler.deleteProduct));
+  .delete(controllerWrapper(productController.deleteProduct));
 
 module.exports = productRouter;
