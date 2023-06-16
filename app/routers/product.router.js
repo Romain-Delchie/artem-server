@@ -1,3 +1,11 @@
+const express = require('express');
+const productControler = require('../controllers/product.controller');
+const controllerWrapper = require('../utils/controller-wrapper');
+const validate = require('../middlewares/validation.middleware');
+const addProductSchema = require('../validation/add-product.validation');
+const updateProductSchema = require('../validation/update-product.validation');
+const authMiddleware = require('../middlewares/auth.middleware');
+
 const productRouter = express.Router();
 
 productRouter.route('/')
@@ -39,7 +47,7 @@ productRouter.route('/:id(\\d+)')
  * @param {number} query.id.required - id du produit
  * @return {[produit]} 200 - product : Le produit recherché
  */
-  .get(controllerWrapper(quotationControler.getOneProduct))
+  .get(controllerWrapper(productControler.getOneProduct))
 /**
  * PATCH /product/{id}
  * @tags Product
