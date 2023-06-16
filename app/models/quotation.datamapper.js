@@ -6,7 +6,7 @@ module.exports = class Quotation extends CoreDatamapper {
   async findQuotationsByAccountId(id) {
     const preparedQuery = {
       text: `SELECT
-      quotation.id as id,
+      quotation.id as quotation_id,
       TO_CHAR(quotation.creation_date, 'DD/MM/YYYY') as creation_date,
       TO_CHAR(quotation.expiration_date, 'DD/MM/YYYY') as expiration_date,
       quotation.shipment as shipment,
@@ -24,6 +24,7 @@ module.exports = class Quotation extends CoreDatamapper {
     if (!result.rows[0]) {
       return [];
     }
-    return result.rows[0];
+    return result.rows;
   }
 };
+

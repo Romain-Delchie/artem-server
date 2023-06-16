@@ -16,17 +16,19 @@ VALUES
 
 INSERT INTO "delivery" ("delivery_address", "account_id")
 VALUES
-  ('Boulangerie Mon client, 10 rue du client, 75012 Paris', 1);
+  ('Boulangerie Mon client, 10 rue du client, 75012 Paris', 1),
+  ('Boulangerie Au pain d''antan, 17 rue de Paris 77420 Champs sur marne', 1);
 
 INSERT INTO "quotation" ("shipment", "account_id", "reference")
 VALUES
-  (true, 1, 'Boulangerie Thiago');
+  (true, 1, 'Boulangerie Thiago'),
+  (true, 1, 'Boulangerie Au pain d''antan');
 
 INSERT INTO "range" ("name", "description", "image_link")
 VALUES
   ('Toile enfourneur', 'Découvrez nos toiles enfourneur en coton de qualité supérieure, résistantes et durables. Avec des ourlets rentrés pour éviter l''effilochage, ces toiles sont confectionnées avec un fil Kevlar résistant aux hautes températures. Fermeture de toile à recouvrement, cordon ou sangle avec barre inox sertie ou non suivant vos préférences. Profitez de leur fonctionnalité optimale. Choisissez la qualité et notre expertise pour des performances inégalées.', 'te.jpg'),
   ('Toile de couche', 'Découvrez notre gamme de toiles de couche pour la boulangerie. Choisissez parmi nos options de haute qualité, notamment la toile Arlin en 100% lin (380g/m2) matière utilisée communément pour les toiles de couche, et la toile Arconet, un mélange de lin, coton et polyester (320g/m2) avec traitement hydrofuge et anti bactérien pour limiter le farinage et favoriser un séchage rapide. Disponibles en rouleaux de 50m ou en toiles confectionnées avec ourlets ou ourlets et cordons. La solution idéale pour une utilisation professionnelle en boulangerie.', 'tdl.jpg'),
-  ('Tapis de façonneuse', 'Découvrez notre gamme de tapis de façonnage répondant à vos besoins spécifiques, qu''il s''agisse d''un façonnage horizontal ou vertical, artisanal ou industriel. Nos tapis de haute qualité offrent une surface de travail optimale, garantissant une adhérence et une texture parfaites pour obtenir des résultats de façonnage exceptionnels. Faites confiance à notre gamme polyvalente pour améliorer votre processus de façonnage, quel que soit votre secteur d''activité.', 'mp.jpg');
+  ('Tapis de façonneuse', 'Découvrez notre gamme de tapis de façonnage répondant à vos besoins spécifiques, qu''il s''agisse d''un façonnage horizontal ou vertical, artisanal ou industriel. Nos tapis de haute qualité offrent une surface de travail optimale, garantissant une adhérence et une texture parfaites pour obtenir des résultats de façonnage exceptionnels. Faites confiance à notre gamme polyvalente pour améliorer votre processus de façonnage, quel que soit votre secteur d''activité.', 'mp.jpg'),
   ('Tapis de laminoir', 'Découvrez notre gamme de tapis de laminoir et autres transport. Que vous recherchiez un tapis en tissu ou plastifié, lisse ou à relief, de couleur blanche, bleu ou autres, pour accepter des découpes ou non, notre gamme aura le produit pour répondre à vos besoins', 'bdeLam.jpg');
 
 INSERT INTO "product" ("reference", "name", "designation", "description", "image_link", "brand", "price", "unit", "weight", "delivery_time", "stock", "range_id")
@@ -55,6 +57,10 @@ VALUES
   
 INSERT INTO "quotation_has_product" ("quotation_id", "product_id", "quantity")
 VALUES
-  (1, 1, 2);
+  (1, 1, 2),
+  (2, 1, 2),
+  (2, 2, 2),
+  (2, 3, 2),
+  (2, 4, 2);
   
 COMMIT;
