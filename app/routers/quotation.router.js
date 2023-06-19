@@ -22,9 +22,10 @@ quotationRouter.route('/')
  * @tags Quotation
  * @summary crait un devis
  * @param {number} body.account_id.required- id de l'utilisateur concerné
+ * @param {number} body.delivery_id- optionnel id de l'adresse de livraison souhaitée
  * @param {string} body.shipment.required - mode de livraison pour ce devis
  * @param {string} body.reference - optionnel référence du devis
- * @return {reminder} 201 - quotation : Le devis créé
+ * @return {quotation} 201 - quotation : Le devis créé
  * @return {object} 400 - erreur de validation des données en entrée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour créer un devis sur cet utilisateur
  */
@@ -44,6 +45,7 @@ quotationRouter.route('/:id(\\d+)')
  * @tags Quotation
  * @summary Met à jour un devis
  * @param {string} body.shipment optionnel mode de livraison du devis
+ * @param {number} body.delivery_id- optionnel id de l'adresse de livraison souhaitée
  * @param {string} body.reference optionnel référence du devis
  * @param {number} query.id.required - id du devis
  * @return {quotation} 200 - Le devis modifié

@@ -5,7 +5,6 @@ const debug = require('debug')('artem:quotation.controller');
 const quotationController = {
 
   async getQuotations(req, res) {
-    console.log(req.userId)
     const quotations = await quotation.findQuotationsByAccountId(req.userId);  
     return res.json({ quotations });
   },
