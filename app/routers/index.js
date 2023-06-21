@@ -3,7 +3,7 @@ const express = require('express');
 const Artemerror = require('../errors/artem-error');
 const authRouter = require('./auth.router');
 const router = express.Router();
-const profileRouter = require('./profile.router');
+const accountRouter = require('./account.router');
 const quotationRouter = require('./quotation.router');
 const productRouter = require('./product.router');
 const rangeRouter = require('./range.router');
@@ -14,7 +14,7 @@ router.get("/", (req, res) =>{
 } )
 
 router.use('/auth', authRouter);
-router.use('/profile', profileRouter);
+router.use('/account', accountRouter);
 router.use('/quotation', quotationRouter);
 router.use('/product', productRouter);
 router.use('/range', rangeRouter);

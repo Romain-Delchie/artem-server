@@ -2,32 +2,39 @@ const { account } = require('../models/index.datamapper');
 const buildParamObject = require('../utils/build-param-object');
 const { hashPassword } = require('../utils/password');
 
-const debug = require('debug')('app:profileController');
+const debug = require('debug')('app:accountController');
 
-const profileController = {
+const accountController = {
 
   /**
    * @summary Récupère les infos de profil de l'utilisateur connecté
    */
-  async getProfile(req, res) {
+  async getAccount(req, res) {
     const { userId } = req;
-     const profile = await account.findByPk(userId);
-      delete profile.password;
+     const account = await account.findByPk(userId);
+      delete account.password;
 
-    if (!profile) {
-      return res.status(404).json({ profile: null });
+    if (!account) {
+      return res.status(404).json({ account: null });
     }
-    return res.json(profile);
+    return res.json(account);
+  },
+
+    /**
+   * @summary Crait un compte utilisateur
+   */
+  async addAccount(req, res) {
+    const newAccount = await account.create({ ...req.body });
+    return res.status(201).json({ newAccount });
   },
 
   /**
-   * @summary Met à jour les infos de profil de l'utilisateur connecté
+   * @summary Met à jour les infos du compte de l'utilisateur connecté
    */
-  async updateProfile(req, res) {
+  async updateAccount(req, res) {
     const { userId } = req;
     const inputData = req.body;
-    let updatedProfile;
-    let updatedVeterinary;
+    let updatedAccount;
 
     const accountFields = [
       'firstname',
@@ -50,24 +57,24 @@ const profileController = {
 
     // Si il y a des données à mettre à jour dans la table account
     if (Object.keys(accountData).length !== 0) {
-      updatedProfile = await account.update({ id: userId, ...accountData });
-      delete updatedProfile.password;
+      updatedAccount = await account.update({ id: userId, ...accountData });
+      delete updatedAccount.password;
     }
 
 
 
     // On retourne les données mises à jour
-    return res.json({ ...updatedProfile });
+    return res.json({ ...updatedAccount });
   },
 
-  async deleteProfile(req, res) {
+  async deleteAccount(req, res) {
     const { userId } = req;
-    const deletedProfile = await account.delete(userId);
-    if (deletedProfile) {
+    const deletedAccount = await account.delete(userId);
+    if (deletedAccount) {
       return res.status(204).end();
     }
     return res.status(403).json({ message: 'Forbidden' });
   }
 };
 
-module.exports = profileController;
+module.exports = accountController;

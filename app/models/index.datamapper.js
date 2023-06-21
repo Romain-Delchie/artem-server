@@ -1,4 +1,4 @@
-const pool = require('./pg.pool');
+const pool = require('./mysql.pool');
 const Account = require('./account.datamapper');
 const Quotation = require('./quotation.datamapper');
 const Product = require('./product.datamapper');

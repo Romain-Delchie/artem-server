@@ -15,18 +15,18 @@ module.exports = class CoreDatamapper {
        * @returns {object} un enregistrement
        */
     async findByPk(id) {
-      const preparedQuery = {
-        text: `SELECT * FROM "${this.tableName}" WHERE id = $1`,
-        values: [id],
-      };
+      const preparedQuery = 
+        `SELECT * FROM ${this.tableName} WHERE id = ?`;
+        
+
   
-      const result = await this.client.query(preparedQuery);
+      const result = await this.client.query(preparedQuery, [id]);
   
-      if (!result.rows[0]) {
+      if (!result[0]) {
         return null;
       }
   
-      return result.rows[0];
+      return result[0];
     }
   
     /**
@@ -35,8 +35,7 @@ module.exports = class CoreDatamapper {
        */
     async findAll() {
       const result = await this.client.query(`SELECT * FROM "${this.tableName}"`);
-  console.log(result.rows)
-      return result.rows;
+      return result;
     }
   
     /**
@@ -114,7 +113,7 @@ module.exports = class CoreDatamapper {
        * @returns {boolean} nombre d'enregistrement supprimés
       */
     async delete(id) {
-      const result = await this.client.query(`DELETE FROM "${this.tableName}" WHERE id = $1`, [id]);
+      const result = await this.client.query(`DELETE FROM "${this.tableName}" WHERE id = ?`, [id]);
   
       return !!result.rowCount;
     }
