@@ -47,29 +47,24 @@ module.exports = class CoreDatamapper {
       const fields = [];
       const placeholders = [];
       const values = [];
-      let indexPlaceholder = 1;
+      const nameCreated = [];
   
       Object.entries(inputData).forEach(([prop, value]) => {
-        fields.push(`"${prop}"`);
-        placeholders.push(`$${indexPlaceholder}`);
-        indexPlaceholder += 1;
+        fields.push(`${prop}`);
+        if (prop === "firstname" || prop === "lastname") {
+          nameCreated.push(`${value}`);
+        }
+        placeholders.push(`?`);
         values.push(value);
       });
-  
-      const preparedQuery = {
-        text: `
-          INSERT INTO "${this.tableName}"
+      const preparedQuery = 
+        `
+          INSERT INTO ${this.tableName}
           (${fields})
           VALUES (${placeholders})
-          RETURNING *
-        `,
-        values,
-      };
-  
-      const result = await this.client.query(preparedQuery);
-      const row = result.rows[0];
-  
-      return row;
+        `;
+      await this.client.query(preparedQuery, values);
+      return inputData;
     }
   
     /**
@@ -79,32 +74,27 @@ module.exports = class CoreDatamapper {
        * @returns {object} l'enregistrement mis à jour
        */
     async update({ id, ...inputData }) {
-      const fieldsAndPlaceholders = [];
-      let indexPlaceholder = 1;
+      const fields = [];
       const values = [];
   
       Object.entries(inputData).forEach(([prop, value]) => {
-        fieldsAndPlaceholders.push(`"${prop}" = $${indexPlaceholder}`);
-        indexPlaceholder += 1;
+        fields.push(`${prop} = ?`);
         values.push(value);
       });
   
       values.push(id);
   
-      const preparedQuery = {
-        text: `
-          UPDATE "${this.tableName}" SET
-          ${fieldsAndPlaceholders}
-          WHERE id = $${indexPlaceholder}
-          RETURNING *
-        `,
-        values,
-      };
-  
-      const result = await this.client.query(preparedQuery);
-      const row = result.rows[0];
-  
-      return row;
+      const preparedQuery = `
+          UPDATE ${this.tableName} SET
+          ${fields}
+          WHERE id = ?
+          
+        `;
+      
+      await this.client.query(preparedQuery, values);
+      const updatedData = await this.client.query(`SELECT * FROM ${this.tableName} WHERE id = ?`, [id]);
+      delete updatedData[0].password;
+      return updatedData[0];
     }
   
     /**
@@ -113,8 +103,8 @@ module.exports = class CoreDatamapper {
        * @returns {boolean} nombre d'enregistrement supprimés
       */
     async delete(id) {
-      const result = await this.client.query(`DELETE FROM "${this.tableName}" WHERE id = ?`, [id]);
-  
-      return !!result.rowCount;
-    }
+     await this.client.query(`DELETE FROM ${this.tableName} WHERE id = ?`, [id]);
+  const tryResult = await this.client.query(`SELECT * FROM ${this.tableName} WHERE id = ?`, [id]);
+  return tryResult;
+}
   };

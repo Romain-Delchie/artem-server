@@ -10,6 +10,5 @@ module.exports = Joi.object({
   firstname: Joi.string(),
   invoice_address: Joi.string(),
   company: Joi.string(),
-  phone_number: Joi.string().pattern(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/),
-  id: Joi.number().integer().min(1).required()
+  phone_number: Joi.string().pattern(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/)
 }).min(1).with('password', 'repeat_password');

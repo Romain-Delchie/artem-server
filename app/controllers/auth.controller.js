@@ -61,7 +61,7 @@ const authController = {
     delete newAccount.password;
 
 
-    res.json({ newAccount });
+    res.json({newAccount});
   },
 };
 

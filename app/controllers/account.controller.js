@@ -11,23 +11,14 @@ const accountController = {
    */
   async getAccount(req, res) {
     const { userId } = req;
-     const account = await account.findByPk(userId);
-      delete account.password;
+     const accountConnected = await account.findByPk(userId);
+      delete accountConnected.password;
 
-    if (!account) {
+    if (!accountConnected) {
       return res.status(404).json({ account: null });
     }
-    return res.json(account);
+    return res.json(accountConnected);
   },
-
-    /**
-   * @summary Crait un compte utilisateur
-   */
-  async addAccount(req, res) {
-    const newAccount = await account.create({ ...req.body });
-    return res.status(201).json({ newAccount });
-  },
-
   /**
    * @summary Met à jour les infos du compte de l'utilisateur connecté
    */
@@ -70,7 +61,7 @@ const accountController = {
   async deleteAccount(req, res) {
     const { userId } = req;
     const deletedAccount = await account.delete(userId);
-    if (deletedAccount) {
+    if (deletedAccount.length === 0) {
       return res.status(204).end();
     }
     return res.status(403).json({ message: 'Forbidden' });

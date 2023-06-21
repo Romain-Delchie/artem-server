@@ -4,11 +4,11 @@ module.exports = class Quotation extends CoreDatamapper {
   tableName = 'quotation';
 
   async findQuotationsByAccountId(id) {
-    const preparedQuery = {
-      text: `SELECT
+    const preparedQuery = 
+      `SELECT
       quotation.id as quotation_id,
-      TO_CHAR(quotation.creation_date, 'DD/MM/YYYY') as creation_date,
-      TO_CHAR(quotation.expiration_date, 'DD/MM/YYYY') as expiration_date,
+      DATE_FORMAT(quotation.creation_date, '%d/%m/%Y') AS creation_date,
+      DATE_FORMAT(quotation.expiration_date, '%d/%m/%Y') AS expiration_date,
       quotation.shipment as shipment,
       quotation.reference as reference,
       product.id AS product_id,
@@ -20,22 +20,21 @@ module.exports = class Quotation extends CoreDatamapper {
       JOIN quotation_has_product ON quotation.id = quotation_has_product.quotation_id 
       JOIN product ON product.id = quotation_has_product.product_id
       JOIN delivery ON delivery.id = quotation.delivery_id 
-      WHERE quotation.account_id = $1`,
-      values: [id],
-    };
-    const result = await this.client.query(preparedQuery);
-    if (!result.rows[0]) {
+      WHERE quotation.account_id = ?`;
+
+      const result = await this.client.query(preparedQuery, [id]);
+    if (!result) {
       return [];
     }
-    return result.rows;
+    return result;
   }
 
   async findQuotationById(id) {
-    const preparedQuery = {
-      text: `SELECT
+    const preparedQuery =  
+      `SELECT
       quotation.id as quotation_id,
-      TO_CHAR(quotation.creation_date, 'DD/MM/YYYY') as creation_date,
-      TO_CHAR(quotation.expiration_date, 'DD/MM/YYYY') as expiration_date,
+      DATE_FORMAT(quotation.creation_date, '%d/%m/%Y') AS creation_date,
+      DATE_FORMAT(quotation.expiration_date, '%d/%m/%Y') AS expiration_date,
       quotation.shipment as shipment,
       quotation.reference as reference,
       product.id AS product_id,
@@ -47,14 +46,13 @@ module.exports = class Quotation extends CoreDatamapper {
       JOIN quotation_has_product ON quotation.id = quotation_has_product.quotation_id 
       JOIN product ON product.id = quotation_has_product.product_id
       LEFT JOIN delivery ON delivery.id = quotation.delivery_id 
-      WHERE quotation_id = $1`,
-      values: [id],
-    };
-    const result = await this.client.query(preparedQuery);
-    console.log(result.rows);
-    if (!result.rows[0]) {
+      WHERE quotation_id = ?`;
+
+    const result = await this.client.query(preparedQuery, [id]);
+    const row = result[0];
+    if (!row) {
       return [];
     }
-    return result.rows;
+    return row;
   }
 };

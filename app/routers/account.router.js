@@ -5,6 +5,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
 const validate = require('../middlewares/validation.middleware');
 const updateAccountSchema = require('../validation/update-account.validation');
 const addAccountSchema = require('../validation/add-account.validation');
+const authController = require('../controllers/auth.controller');
 
 const accountRouter = express.Router();
 
@@ -35,7 +36,7 @@ accountRouter.route('/')
  * @return {object} 400 - erreur de validation des données en entrée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour créer un compte
  */
-  .post(validate(addAccountSchema, 'body'), controllerWrapper(accountController.addAccount))
+  .post(validate(addAccountSchema, 'body'), controllerWrapper(authController.register))
   /**
   * PATCH /account
   * @tags Account
