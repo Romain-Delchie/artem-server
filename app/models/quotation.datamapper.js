@@ -37,8 +37,8 @@ module.exports = class Quotation extends CoreDatamapper {
       GROUP BY quotation.id`;
 
       const result = await this.client.query(preparedQuery, [id]);
-    if (!result) {
-      return [];
+      if (!result) {
+        return [];
     }
     return result;
   }
@@ -63,24 +63,24 @@ module.exports = class Quotation extends CoreDatamapper {
             'delivery_time', product.delivery_time,
             'weight', product.weight,
             'quantity', quotation_has_product.quantity
-          )
-        )
-        FROM product
-        INNER JOIN quotation_has_product ON product.id = quotation_has_product.product_id
-        WHERE quotation_has_product.quotation_id = quotation.id
-      ) AS products
-    FROM ${this.tableName}
-    LEFT JOIN quotation_has_product ON quotation.id = quotation_has_product.quotation_id
-    LEFT JOIN product ON product.id = quotation_has_product.product_id
-    LEFT JOIN delivery ON delivery.id = quotation.delivery_id
-    WHERE quotation.id = ?
-    `;
-
-    const result = await this.client.query(preparedQuery, [id]);
-    const row = result[0];
-    console.log(row.products)
+            )
+            )
+            FROM product
+            INNER JOIN quotation_has_product ON product.id = quotation_has_product.product_id
+            WHERE quotation_has_product.quotation_id = quotation.id
+            ) AS products
+            FROM ${this.tableName}
+            LEFT JOIN quotation_has_product ON quotation.id = quotation_has_product.quotation_id
+            LEFT JOIN product ON product.id = quotation_has_product.product_id
+            LEFT JOIN delivery ON delivery.id = quotation.delivery_id
+            WHERE quotation.id = ?
+            `;
+            
+            const result = await this.client.query(preparedQuery, [id]);
+            const row = result[0];
+            
     if (!row) {
-      return [];
+      return null;
     }
     return row;
   }

@@ -13,5 +13,5 @@ module.exports = Joi.object({
   delivery_time: Joi.string(),
   stock: Joi.boolean(),
   range_id: Joi.number().integer(),
-  id: Joi.number().integer().min(1).required()
+  id: Joi.number().integer().min(1)
 }).min(2);

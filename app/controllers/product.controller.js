@@ -29,7 +29,7 @@ const productController = {
     const productToPatch = await product.findByPk(req.params.id);
 
     if (!productToPatch) {
-      res.status(404).json({ product: null });
+      res.status(404).json({ error: "product not found" });
     }
     
     const patchedproduct = await product.update({ id: req.params.id, ...req.body });

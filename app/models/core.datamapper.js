@@ -34,7 +34,7 @@ module.exports = class CoreDatamapper {
        * @returns {object[]} une liste d'enregistrements
        */
     async findAll() {
-      const result = await this.client.query(`SELECT * FROM "${this.tableName}"`);
+      const result = await this.client.query(`SELECT * FROM ${this.tableName}`);
       return result;
     }
   
@@ -93,6 +93,7 @@ module.exports = class CoreDatamapper {
       
       await this.client.query(preparedQuery, values);
       const updatedData = await this.client.query(`SELECT * FROM ${this.tableName} WHERE id = ?`, [id]);
+      console.log(updatedData)
       delete updatedData[0].password;
       return updatedData[0];
     }
