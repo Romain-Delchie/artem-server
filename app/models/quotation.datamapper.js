@@ -4,7 +4,7 @@ module.exports = class Quotation extends CoreDatamapper {
   tableName = 'quotation';
 
   async findQuotationsByAccountId(id) {
-    const preparedQuery = 
+    const preparedQuery =
       `SELECT
       quotation.id AS quotation_id,
       DATE_FORMAT(quotation.creation_date, '%d/%m/%Y') AS creation_date,
@@ -22,7 +22,8 @@ module.exports = class Quotation extends CoreDatamapper {
             'price', product.price,
             'delivery_time', product.delivery_time,
             'weight', product.weight,
-            'quantity', quotation_has_product.quantity
+            'quantity', quotation_has_product.quantity,
+            'quotation_has_product_id', quotation_has_product.id
           )
         )
         FROM product
@@ -36,15 +37,15 @@ module.exports = class Quotation extends CoreDatamapper {
       WHERE quotation.account_id = ?
       GROUP BY quotation.id`;
 
-      const result = await this.client.query(preparedQuery, [id]);
-      if (!result) {
-        return [];
+    const result = await this.client.query(preparedQuery, [id]);
+    if (!result) {
+      return [];
     }
     return result;
   }
 
   async findQuotationById(id) {
-    const preparedQuery =  
+    const preparedQuery =
       `SELECT
       quotation.id AS quotation_id,
       DATE_FORMAT(quotation.creation_date, '%d/%m/%Y') AS creation_date,
@@ -62,7 +63,8 @@ module.exports = class Quotation extends CoreDatamapper {
             'price', product.price,
             'delivery_time', product.delivery_time,
             'weight', product.weight,
-            'quantity', quotation_has_product.quantity
+            'quantity', quotation_has_product.quantity,
+            'quotation_has_product_id', quotation_has_product.id
             )
             )
             FROM product
@@ -75,10 +77,10 @@ module.exports = class Quotation extends CoreDatamapper {
             LEFT JOIN delivery ON delivery.id = quotation.delivery_id
             WHERE quotation.id = ?
             `;
-            
-            const result = await this.client.query(preparedQuery, [id]);
-            const row = result[0];
-            
+
+    const result = await this.client.query(preparedQuery, [id]);
+    const row = result[0];
+
     if (!row) {
       return null;
     }

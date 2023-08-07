@@ -4,6 +4,7 @@ const Quotation = require('./quotation.datamapper');
 const Product = require('./product.datamapper');
 const Range = require('./range.datamapper');
 const Delivery = require('./delivery.datamapper');
+const QuotationHasProduct = require('./quotationHasProduct.datamapper');
 
 
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
   quotation: new Quotation(pool),
   product: new Product(pool),
   range: new Range(pool),
-  delivery: new Delivery(pool)
+  delivery: new Delivery(pool),
+  quotationHasProduct: new QuotationHasProduct(pool),
 };
