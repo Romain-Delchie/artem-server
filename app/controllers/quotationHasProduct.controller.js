@@ -10,13 +10,13 @@ const quotationHasProductController = {
 
     async addQuotationHasProduct(req, res) {
         const newQuotationHasProduct = await quotationHasProduct.create({ ...req.body });
-        return res.status(201).json({ newQuotationHasProduct });
+        return res.status(201).json(newQuotationHasProduct);
     },
 
     async getProductsFromQuotation(req, res) {
         const productsFromQuotation = await quotationHasProduct.findProductsFromQuotation(req.params.id);
         if (!productsFromQuotation) {
-            throw new ArtemError('Quotation not found', 404);
+            throw new ArtemError('lineQuotation not found', 404);
         }
         return res.json({ productsFromQuotation });
     },
@@ -35,7 +35,7 @@ const quotationHasProductController = {
     async deleteQuotationHasProduct(req, res) {
         const quotationHasProductToDelete = await quotationHasProduct.findByPk(req.params.id);
         if (!quotationHasProductToDelete) {
-            throw new ArtemError('Quotation not found', 404);
+            throw new ArtemError('lineQuotation not found', 404);
         }
         await quotationHasProduct.delete(req.params.id);
         return res.status(204).json();

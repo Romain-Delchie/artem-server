@@ -28,7 +28,7 @@ quotationHasProductRouter.route('/')
    * @return {object} 400 - erreur de validation des données en entrée
    * @return {object} 403 - L'utilisateur n'a pas les droits pour ajouter un produit à ce devis
    */
-  .post(validate(addQuotationHasProductSchema, 'body'), controllerWrapper(quotationHasProductController.addQuotationHasProduct));
+  .post(authMiddleware.checkToken, validate(addQuotationHasProductSchema, 'body'), controllerWrapper(quotationHasProductController.addQuotationHasProduct));
 
 quotationHasProductRouter.route('/:id(\\d+)')
   /**
