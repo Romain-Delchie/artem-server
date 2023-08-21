@@ -9,6 +9,7 @@ const productRouter = require('./product.router');
 const rangeRouter = require('./range.router');
 const deliveryRouter = require('./delivery.router');
 const quotationHasProductRouter = require('./quotationHasProduct.router');
+const emailOrderRouter = require('./emailOrder.router');
 
 router.get("/", (req, res) => {
   res.send('Hello World!')
@@ -21,6 +22,7 @@ router.use('/product', productRouter);
 router.use('/range', rangeRouter);
 router.use('/delivery', deliveryRouter);
 router.use('/quotationHasProduct', quotationHasProductRouter);
+router.use('/email-order', emailOrderRouter);
 
 router.use(() => {
   throw new Artemerror('API Route not found', 404);
