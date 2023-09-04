@@ -8,9 +8,10 @@ module.exports = Joi.object({
   repeat_password: Joi.ref('password'),
   lastname: Joi.string().required(),
   firstname: Joi.string().required(),
-  invoice_address: Joi.string().required(),
+  billing_address: Joi.string().required(),
+  delivery_standard: Joi.string().required(),
   company: Joi.string().required(),
-  siret: Joi.number().strict().required(),
+  siret: Joi.string().pattern(/^[0-9]{14}$/).required(),
   profile_id: Joi.number().integer().strict().required(),
   phone_number: Joi.string().pattern(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/).required()
 })

@@ -11,8 +11,8 @@ const accountController = {
    */
   async getAccount(req, res) {
     const { userId } = req;
-     const accountConnected = await account.findByPk(userId);
-      delete accountConnected.password;
+    const accountConnected = await account.findCompletelyAccount(userId);
+    delete accountConnected.password;
 
     if (!accountConnected) {
       return res.status(404).json({ account: null });
@@ -33,8 +33,14 @@ const accountController = {
       'email',
       'password',
       'phone_number',
-      'invoice_address',
+      'billing_address_id',
+      'delivery_standard_id',
+      'siret',
+      'role',
       'company',
+      'profile_id',
+
+
     ];
     // Données du compte à mettre à jour
     const accountData = buildParamObject(accountFields, inputData);

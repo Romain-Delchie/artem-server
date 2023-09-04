@@ -12,7 +12,10 @@ module.exports = class Quotation extends CoreDatamapper {
       quotation.shipment AS shipment,
       quotation.reference AS reference,
       delivery.id AS delivery_id,
-      delivery.delivery_address AS delivery_address,
+      address.name_address AS name_address,
+    address.street_address AS street_address,
+    address.zip_code AS zip_code,
+    address.city AS city,
       (
         SELECT JSON_ARRAYAGG(
           JSON_OBJECT(
@@ -34,6 +37,7 @@ module.exports = class Quotation extends CoreDatamapper {
     LEFT JOIN quotation_has_product ON quotation.id = quotation_has_product.quotation_id
     LEFT JOIN product ON product.id = quotation_has_product.product_id
     LEFT JOIN delivery ON delivery.id = quotation.delivery_id
+    LEFT JOIN address ON quotation.delivery_id = address.id
       WHERE quotation.account_id = ?
       GROUP BY quotation.id`;
 
@@ -53,7 +57,6 @@ module.exports = class Quotation extends CoreDatamapper {
       quotation.shipment AS shipment,
       quotation.reference AS reference,
       delivery.id AS delivery_id,
-      delivery.delivery_address AS delivery_address,
       (
         SELECT JSON_ARRAYAGG(
           JSON_OBJECT(
@@ -75,6 +78,7 @@ module.exports = class Quotation extends CoreDatamapper {
             LEFT JOIN quotation_has_product ON quotation.id = quotation_has_product.quotation_id
             LEFT JOIN product ON product.id = quotation_has_product.product_id
             LEFT JOIN delivery ON delivery.id = quotation.delivery_id
+            LEFT JOIN address ON delivery.delivery_address_id = address.id
             WHERE quotation.id = ?
             `;
 

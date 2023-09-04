@@ -8,7 +8,11 @@ module.exports = Joi.object({
   repeat_password: Joi.ref('password'),
   lastname: Joi.string(),
   firstname: Joi.string(),
-  invoice_address: Joi.string(),
+  billing_address_id: Joi.number().integer(),
+  delivery_standard_id: Joi.number().integer(),
+  siret: Joi.string().pattern(/^[0-9]{14}$/),
+  role: Joi.string().valid('admin', 'user'),
+  profile_id: Joi.number().integer(),
   company: Joi.string(),
   phone_number: Joi.string().pattern(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/)
 }).min(1).with('password', 'repeat_password');

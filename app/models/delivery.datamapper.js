@@ -4,10 +4,10 @@ module.exports = class Delivery extends CoreDatamapper {
   tableName = 'delivery';
 
   async findDeliveriesByAccountId(id) {
-    const preparedQuery = 
+    const preparedQuery =
       `SELECT
       delivery.id as delivery_id,
-      delivery.delivery_address as delivery_address,
+      delivery.delivery_address_id as delivery_address_id,
       account.id as account_id
       FROM ${this.tableName} 
       JOIN account ON account.id = delivery.account_id
@@ -16,15 +16,15 @@ module.exports = class Delivery extends CoreDatamapper {
     const result = await this.client.query(preparedQuery, [id]);
     if (!result) {
       return [];
-  }
-  return result;
+    }
+    return result;
   }
 
   async findDeliveryById(id) {
-    const preparedQuery = 
+    const preparedQuery =
       `SELECT
       delivery.id as delivery_id,
-      delivery.delivery_address as delivery_address,
+      delivery.delivery_address_id as delivery_address_id,
       account.id as account_id
       FROM ${this.tableName} 
       JOIN account ON account.id = delivery.account_id
@@ -32,7 +32,7 @@ module.exports = class Delivery extends CoreDatamapper {
 
     const result = await this.client.query(preparedQuery, [id]);
     const row = result[0];
-            
+
     if (!row) {
       return null;
     }

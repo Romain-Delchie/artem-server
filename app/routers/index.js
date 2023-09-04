@@ -8,6 +8,7 @@ const quotationRouter = require('./quotation.router');
 const productRouter = require('./product.router');
 const rangeRouter = require('./range.router');
 const deliveryRouter = require('./delivery.router');
+const addressRouter = require('./address.router');
 const quotationHasProductRouter = require('./quotationHasProduct.router');
 const emailOrderRouter = require('./emailOrder.router');
 
@@ -21,6 +22,7 @@ router.use('/quotation', quotationRouter);
 router.use('/product', productRouter);
 router.use('/range', rangeRouter);
 router.use('/delivery', deliveryRouter);
+router.use('/address', addressRouter);
 router.use('/quotationHasProduct', quotationHasProductRouter);
 router.use('/email-order', emailOrderRouter);
 
