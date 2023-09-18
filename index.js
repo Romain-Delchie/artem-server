@@ -18,7 +18,8 @@ process.on('unhandledRejection', (err) => {
 const server = http.createServer(app);
 
 const port = process.env.PORT || 3000;
+const host = process.env.MYSQL_HOST || 'localhost';
 
 server.listen(port, () => {
-  debugServer(`Server launched at http://localhost:${port}`);
+  console.log(`Server launched at http://${host}:${port}`);
 });
