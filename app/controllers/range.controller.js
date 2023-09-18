@@ -5,7 +5,7 @@ const debug = require('debug')('artem:range.controller');
 const rangeController = {
 
   async getRanges(req, res) {
-    const ranges = await range.findAll();
+    const ranges = await range.findAllRanges();
     return res.json({ ranges });
 
   },
@@ -17,7 +17,7 @@ const rangeController = {
 
 
   async getOneRange(req, res) {
-    const oneRange = await range.findByPk(req.params.id);
+    const oneRange = await range.findOneRange(req.params.id);
     if (!oneRange) {
       throw new ArtemError('Range not found', 404);
     }

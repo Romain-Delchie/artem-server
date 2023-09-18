@@ -10,6 +10,15 @@ const productController = {
 
   },
 
+  async getTE(req, res) {
+    const products = await product.findAllByRange(1);
+    return res.json(products);
+  },
+  async getLam(req, res) {
+    const products = await product.findAllByRange(4);
+    return res.json(products);
+  },
+
   async addProduct(req, res) {
     const newProduct = await product.create({ ...req.body });
     return res.status(201).json({ newProduct });
