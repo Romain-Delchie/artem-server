@@ -27,7 +27,17 @@ const options = {
   // Url des Open API JSON Docs.
   apiDocsPath: '/api/docs',
 };
-
+const whitelist = ["http://localhost:3000"]
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true,
+}
 const app = express();
 
 // Activer express-jsdoc-swagger
@@ -36,7 +46,7 @@ expressJsDocSwagger(app)(options);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(process.env.CORS_DOMAINS ?? '*'));
+app.use(cors(corsOptions));
 app.use(router);
 app.use(errorHandler);
 
