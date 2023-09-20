@@ -27,7 +27,7 @@ const options = {
   // Url des Open API JSON Docs.
   apiDocsPath: '/api/docs',
 };
-const whitelist = ["http://localhost:3000"]
+const whitelist = ["http://85.215.34.177:5173"]
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
