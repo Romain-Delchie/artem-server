@@ -30,13 +30,21 @@ const options = {
 
 const app = express();
 
+var corsOptions = {
+  origin: 'http://85.215.34.177:5173',
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+}
+
+
 // Activer express-jsdoc-swagger
 expressJsDocSwagger(app)(options);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(process.env.CORS_DOMAINS ?? '*'));
+app.use(cors(corsOptions));
 app.use(router);
 app.use(errorHandler);
 
