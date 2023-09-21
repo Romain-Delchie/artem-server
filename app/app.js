@@ -27,18 +27,16 @@ const options = {
   // Url des Open API JSON Docs.
   apiDocsPath: '/api/docs',
 };
-const whitelist = ["http://85.215.34.177:5173"]
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error("Not allowed by CORS"))
-    }
-  },
-  credentials: true,
-}
+
 const app = express();
+
+var corsOptions = {
+  origin: 'http://85.215.34.177:5173',
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+}
+
 
 // Activer express-jsdoc-swagger
 expressJsDocSwagger(app)(options);
