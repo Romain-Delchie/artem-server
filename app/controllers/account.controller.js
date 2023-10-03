@@ -71,7 +71,49 @@ const accountController = {
       return res.status(204).end();
     }
     return res.status(403).json({ message: 'Forbidden' });
+  },
+
+  async verifyEmail(req, res) {
+    const { code } = req.body;
+    console.log(typeof code);
+    const verified = await account.findByEmailToken(code);
+    console.log(verified);
+
+    if (verified) {
+      account.update({ id: verified.id, verified: true });
+      return res.json({ message: 'Email vérifié' });
+    } else {
+      return res.status(403).json({ message: 'Code invalide' });
+    }
+  },
+
+  async updatePassword(req, res) {
+    const { password, code } = req.body;
+    console.log(password);
+    const hashedPassword = await hashPassword(password);
+    console.log(hashedPassword);
+    const accountToUpdate = await account.findByResetToken(code);
+    if (accountToUpdate) {
+      account.update({ id: accountToUpdate.id, password: hashedPassword });
+      return res.json({ message: 'Mot de passe mis à jour' });
+    } else {
+      return res.status(403).json({ message: 'Code invalide' });
+    }
+
+  },
+
+  async findByResetToken(req, res) {
+    const { token } = req.params;
+    console.log({ resetToken: req.params });
+    const accountToFind = await account.findByResetToken(token);
+    console.log({ accounToFind: accountToFind });
+    if (accountToFind) {
+      return res.json({ ...accountToFind });
+    } else {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
   }
+
 };
 
 module.exports = accountController;

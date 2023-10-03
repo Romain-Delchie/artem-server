@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 const debug = require('debug')('app:authController');
 const { checkPassword, hashPassword } = require('../utils/password');
 const ArtemError = require('../errors/artem-error');
-
-
+const crypto = require('crypto');
 const { account } = require('../models/index.datamapper');
 
 const authController = {
@@ -15,14 +14,14 @@ const authController = {
   async signin(req, res) {
     // récupérer les données email password
     const { email, password } = req.body;
-    if(!email || !password) throw new ArtemError('Unable to login with credentials provided', 401);
-    
+    if (!email || !password) throw new ArtemError('Unable to login with credentials provided', 401);
+
     // chercher l'utilisateur en base
     const user = await account.findByEmail(email);
     // Si il n'existe pas renvoyer une erreur
     if (!user) {
       debug(`user ${email} not found}`);
-      throw new ArtemError('Unable to login with credentials provided', 401);
+      throw new ArtemError('Unable to login with credentials provided', 404);
     }
     // vérifier le mot de passe
     const validPassword = await checkPassword(password, user.password);
@@ -52,7 +51,7 @@ const authController = {
     if (existingUser) {
       throw new ArtemError('User with this email already exists', 400);
     }
-
+    accountData.email_token = crypto.randomBytes(16).toString('hex');
     // hasher le mot de passe
     accountData.password = await hashPassword(accountData.password);
 
@@ -61,8 +60,21 @@ const authController = {
     delete newAccount.password;
 
 
-    res.json({newAccount});
+    res.json({ newAccount });
   },
+
+  async refreshToken(req, res) {
+    const { id, email, firstname, lastname, role } = req.body;
+    const token = jwt.sign({
+      id,
+      email,
+      firstname,
+      lastname,
+      role
+    }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_DURATION });
+
+    return res.json({ token });
+  }
 };
 
 module.exports = authController;

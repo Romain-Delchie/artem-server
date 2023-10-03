@@ -39,4 +39,6 @@ authRouter.post('/signin', validate(signinSchema, 'body'), controllerWrapper(aut
    */
 authRouter.post('/register', validate(registerSchema, 'body'), controllerWrapper(authController.register));
 
+authRouter.post('/refresh-token', controllerWrapper(authController.refreshToken));
+
 module.exports = authRouter;

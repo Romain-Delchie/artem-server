@@ -11,6 +11,8 @@ module.exports = class Account extends CoreDatamapper {
       account.firstname as firstname,
       account.lastname as lastname,
       account.email as email,
+      account.verified as verified,
+      account.email_token as email_token,
       account.phone_number as phone_number,
       account.role as role,
       account.profile_id as profile_id,
@@ -73,11 +75,44 @@ module.exports = class Account extends CoreDatamapper {
       WHERE email = ? `;
 
     const result = await this.client.query(preparedQuery, [email]);
-
-
     if (!result[0]) {
       return null;
     }
     return result[0];
   }
+
+  async findByEmailToken(emailToken) {
+    const preparedQuery =
+      `SELECT
+      account.id as id,
+      account.email as email,
+      account.firstname as firstname,
+      account.lastname as lastname,
+      account.role as role
+      FROM ${this.tableName}
+      WHERE email_token = ?`;
+    const result = await this.client.query(preparedQuery, [emailToken]);
+    if (!result[0]) {
+      return null;
+    }
+    return result[0];
+  }
+
+  async findByResetToken(resetToken) {
+    const preparedQuery =
+      `SELECT
+      account.id as id,
+      account.email as email,
+      account.firstname as firstname,
+      account.lastname as lastname,
+      account.role as role
+      FROM ${this.tableName}
+      WHERE reset_token = ?`;
+    const result = await this.client.query(preparedQuery, [resetToken]);
+    if (!result[0]) {
+      return null;
+    }
+    return result[0];
+  }
+
 };

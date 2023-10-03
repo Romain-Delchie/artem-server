@@ -6,18 +6,19 @@ const validate = require('../middlewares/validation.middleware');
 const updateAccountSchema = require('../validation/update-account.validation');
 const addAccountSchema = require('../validation/add-account.validation');
 const authController = require('../controllers/auth.controller');
+const { account } = require('../models/index.datamapper');
 
 const accountRouter = express.Router();
 
 accountRouter.route('/')
-/**
- * GET /account
- * @tags Account
- * @typedef {object} account
- * @summary Renvoi les données du compte de l’utilisateur connecté
- * @return {account} 200 - Les données du compte de l’utilisateur connecté
- * @return {object} 404 - L'utilisateur n'a pas été trouvé
- */
+  /**
+   * GET /account
+   * @tags Account
+   * @typedef {object} account
+   * @summary Renvoi les données du compte de l’utilisateur connecté
+   * @return {account} 200 - Les données du compte de l’utilisateur connecté
+   * @return {object} 404 - L'utilisateur n'a pas été trouvé
+   */
   .get(authMiddleware.checkToken, controllerWrapper(accountController.getAccount))
   /**
  * POST /account
@@ -60,7 +61,13 @@ accountRouter.route('/')
   * @summary Suppression du compte de l’utilisateur connecté
   * @return {object} 204 - Compte supprimé
   * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce compte
-  */    
+  */
   .delete(authMiddleware.checkToken, controllerWrapper(accountController.deleteAccount));
+
+accountRouter.route('/verify-email/').post(controllerWrapper(accountController.verifyEmail));
+
+accountRouter.route('/update-password/').patch(controllerWrapper(accountController.updatePassword));
+
+accountRouter.route('/find-by-token/:token').get(controllerWrapper(accountController.findByResetToken));
 
 module.exports = accountRouter;
