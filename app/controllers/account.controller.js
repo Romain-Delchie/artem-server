@@ -104,11 +104,18 @@ const accountController = {
 
   async findByResetToken(req, res) {
     const { token } = req.params;
-    console.log({ resetToken: req.params });
     const accountToFind = await account.findByResetToken(token);
-    console.log({ accounToFind: accountToFind });
     if (accountToFind) {
       return res.json({ ...accountToFind });
+    } else {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+  },
+
+  async findAccountToValidate(req, res) {
+    const accountToValidate = await account.findAccountToValidate(token);
+    if (accountToValidate) {
+      return res.json({ ...accountToValidate });
     } else {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
