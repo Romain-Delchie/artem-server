@@ -69,6 +69,6 @@ accountRouter.route('/update-password/').patch(controllerWrapper(accountControll
 
 accountRouter.route('/find-by-token/:token').get(controllerWrapper(accountController.findByResetToken));
 
-accountRouter.route('/validation').get(controllerWrapper(accountController.findAccountToValidate));
+accountRouter.route('/validation').get(authMiddleware.checkToken, controllerWrapper(accountController.findAccountToValidate));
 
 module.exports = accountRouter;

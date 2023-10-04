@@ -113,6 +113,7 @@ const accountController = {
   },
 
   async findAccountToValidate(req, res) {
+    const { token } = req.params;
     const accountToValidate = await account.findAllAccountToValidate(token);
     if (accountToValidate) {
       return res.json({ ...accountToValidate });
