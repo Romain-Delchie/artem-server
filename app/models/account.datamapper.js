@@ -115,4 +115,25 @@ module.exports = class Account extends CoreDatamapper {
     return result[0];
   }
 
+  async findAllAccountToValidate() {
+    const preparedQuery =
+      `SELECT
+      account.id as id,
+      account.email as email,
+      account.firstname as firstname,
+      account.lastname as lastname,
+      account.phone_number as phone_number,
+      account.company as company,
+      account.siret as siret,
+      account.billing_address_id as billing_address_id,
+      account.role as role
+      FROM ${this.tableName}
+      WHERE profile_id = ?`;
+    const result = await this.client.query(preparedQuery, [3]);
+    if (!result[0]) {
+      return null;
+    }
+    return result;
+  }
+
 };
