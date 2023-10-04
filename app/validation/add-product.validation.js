@@ -7,6 +7,8 @@ module.exports = Joi.object({
   description: Joi.string().required(),
   image_link: Joi.string().required(),
   brand: Joi.string().required(),
+  length: Joi.number().integer().required(),
+  width: Joi.number().integer().required(),
   price: Joi.number().precision(2).required(),
   unit: Joi.number().required(),
   weight: Joi.number().precision(2).required(),

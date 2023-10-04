@@ -10,6 +10,8 @@ module.exports = Joi.object({
   price: Joi.number().precision(2),
   unit: Joi.number(),
   weight: Joi.number().precision(2),
+  length: Joi.number().integer(),
+  width: Joi.number().integer(),
   delivery_time: Joi.string(),
   stock: Joi.boolean(),
   range_id: Joi.number().integer(),
