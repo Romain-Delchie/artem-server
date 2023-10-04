@@ -116,7 +116,7 @@ const accountController = {
     const { token } = req.params;
     const accountToValidate = await account.findAllAccountToValidate(token);
     if (accountToValidate) {
-      return res.json({ ...accountToValidate });
+      return res.json(accountToValidate);
     } else {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
