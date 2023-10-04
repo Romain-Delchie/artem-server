@@ -6,7 +6,6 @@ const validate = require('../middlewares/validation.middleware');
 const updateAccountSchema = require('../validation/update-account.validation');
 const addAccountSchema = require('../validation/add-account.validation');
 const authController = require('../controllers/auth.controller');
-const { account } = require('../models/index.datamapper');
 
 const accountRouter = express.Router();
 
@@ -69,5 +68,7 @@ accountRouter.route('/verify-email/').post(controllerWrapper(accountController.v
 accountRouter.route('/update-password/').patch(controllerWrapper(accountController.updatePassword));
 
 accountRouter.route('/find-by-token/:token').get(controllerWrapper(accountController.findByResetToken));
+
+accountRouter.route('/validation').get(controllerWrapper(accountController.findAccountToValidate));
 
 module.exports = accountRouter;
