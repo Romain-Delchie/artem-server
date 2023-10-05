@@ -23,7 +23,7 @@ const accountController = {
    * @summary Met à jour les infos du compte de l'utilisateur connecté
    */
   async updateAccount(req, res) {
-    const { userId } = req;
+    const userId = req.body.idToValidate ? req.body.idToValidate : req.userId;
     const inputData = req.body;
     let updatedAccount;
 

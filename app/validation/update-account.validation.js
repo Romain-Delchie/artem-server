@@ -8,6 +8,7 @@ module.exports = Joi.object({
   repeat_password: Joi.ref('password'),
   lastname: Joi.string(),
   firstname: Joi.string(),
+  idToValidate: Joi.number().integer(),
   billing_address_id: Joi.number().integer(),
   delivery_standard_id: Joi.number().integer(),
   siret: Joi.string().pattern(/^[0-9]{14}$/),
