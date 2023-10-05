@@ -32,7 +32,7 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
         const clicli = quote.clicli ? quote.clicli : 0
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_RECEIVER,
+            to: email,
             subject: `Commande Web de ${company} ${zipCode}`,
             html: `<h1>Commande de ${company} ${zipCode} du devis ${quote.quotation_id} via www.artem-fr.com</h1>
           
@@ -87,7 +87,7 @@ emailRouter.post('/forgot-password', async (req, res) => {
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_RECEIVER,
+            to: email,
             subject: `Réinitialisation de votre mot de passe`,
             html: resetPassword(validationLink, accountUser.firstname),
             attachments: [imageAttachment],
@@ -102,7 +102,7 @@ emailRouter.post('/forgot-password', async (req, res) => {
 
 emailRouter.post('/validation', authMiddleware.checkToken, async (req, res) => {
     const { email, firstname, email_token } = req.body;
-    const validationLink = `http://localhost:5173/confirm-email/${email_token}`; // Remplacez par le vrai lien de validation
+    const validationLink = `http://localhost:5173/confirm-email/${email_token}`;
 
     try {
 
@@ -114,7 +114,7 @@ emailRouter.post('/validation', authMiddleware.checkToken, async (req, res) => {
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_RECEIVER,
+            to: email,
             subject: `Confirmation de votre adresse email`,
             html: confirmationEmail(validationLink, firstname),
             attachments: [imageAttachment],
