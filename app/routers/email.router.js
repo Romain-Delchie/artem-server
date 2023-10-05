@@ -32,7 +32,7 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
         const clicli = quote.clicli ? quote.clicli : 0
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: email,
+            to: process.env.EMAIL_RECEIVER, email,
             subject: `Commande Web de ${company} ${zipCode}`,
             html: `<h1>Commande de ${company} ${zipCode} du devis ${quote.quotation_id} via www.artem-fr.com</h1>
           
