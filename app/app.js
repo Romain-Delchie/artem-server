@@ -31,7 +31,7 @@ const options = {
 const app = express();
 
 var corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: '*',
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
