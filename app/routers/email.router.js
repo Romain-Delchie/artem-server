@@ -75,7 +75,7 @@ emailRouter.post('/forgot-password', async (req, res) => {
     }
     account.update({ id: accountUser.id, reset_token: resetToken })
 
-    const validationLink = `http://localhost:5173/reset-password/${resetToken}`; // Remplacez par le vrai lien de validation
+    const validationLink = `http://85.215.34.177:5173/reset-password/${resetToken}`; // Remplacez par le vrai lien de validation
 
     try {
 
@@ -102,7 +102,7 @@ emailRouter.post('/forgot-password', async (req, res) => {
 
 emailRouter.post('/validation', authMiddleware.checkToken, async (req, res) => {
     const { email, firstname, email_token } = req.body;
-    const validationLink = `http://localhost:5173/confirm-email/${email_token}`;
+    const validationLink = `http://85.215.34.177:5173/confirm-email/${email_token}`;
 
     try {
 
