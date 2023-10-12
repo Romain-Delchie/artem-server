@@ -12,6 +12,8 @@ const addressRouter = require('./address.router');
 const quotationHasProductRouter = require('./quotationHasProduct.router');
 const emailRouter = require('./email.router');
 const uploadRouter = require('./upload.router');
+const techsheetRouter = require('./techsheet.router');
+const rangeHasTechsheetRouter = require('./rangeHasTechsheet.router');
 
 router.get("/api", (req, res) => {
   res.send('Hello World!')
@@ -27,6 +29,8 @@ router.use('/api/address', addressRouter);
 router.use('/api/quotationHasProduct', quotationHasProductRouter);
 router.use('/api/email', emailRouter);
 router.use('/api/upload', uploadRouter);
+router.use('/api/techsheet', techsheetRouter);
+router.use('/api/rangeHasTechsheet', rangeHasTechsheetRouter);
 
 router.use(() => {
   throw new Artemerror('API Route not found', 404);

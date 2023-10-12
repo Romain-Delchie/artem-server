@@ -9,7 +9,6 @@ module.exports = {
    */
   checkToken(req, res, next) {
     const token = req.header('x-auth-token');
-
     if (!token) {
       throw new ArtemError('No token provided, authorization denied', 401);
     }

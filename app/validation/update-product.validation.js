@@ -2,6 +2,7 @@ const Joi = require('joi');
 
 module.exports = Joi.object({
   reference: Joi.string(),
+  active: Joi.boolean(),
   name: Joi.string(),
   designation: Joi.string(),
   description: Joi.string(),

@@ -2,6 +2,7 @@ const Joi = require('joi');
 
 module.exports = Joi.object({
   reference: Joi.string().required(),
+  active: Joi.boolean().required(),
   name: Joi.string().required(),
   designation: Joi.string().required(),
   description: Joi.string().required(),
@@ -15,4 +16,4 @@ module.exports = Joi.object({
   delivery_time: Joi.string().required(),
   stock: Joi.boolean().required(),
   range_id: Joi.number().integer().required()
-}).min(12);
+}).min(15);

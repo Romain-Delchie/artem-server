@@ -28,7 +28,7 @@ rangeRouter.route('/')
    * @return {object} 400 - erreur de validation des données en entrée
    * @return {object} 403 - L'utilisateur n'a pas les droits pour créer cette gamme
    */
-  .post(validate(addRangeSchema, 'body'), controllerWrapper(rangeController.addRange));
+  .post(authMiddleware.checkToken, validate(addRangeSchema, 'body'), controllerWrapper(rangeController.addRange));
 
 rangeRouter.route('/:id(\\d+)')
   /**
@@ -50,7 +50,7 @@ rangeRouter.route('/:id(\\d+)')
    * @return {range} 200 - La gamme a été mise à jour
    * @return {object} 403 - L'utilisateur n'a pas les droits pour modifier cette gamme
    */
-  .patch(validate(updateRangeSchema, 'body'), controllerWrapper(rangeController.patchRange))
+  .patch(authMiddleware.checkToken, validate(updateRangeSchema, 'body'), controllerWrapper(rangeController.patchRange))
 
   /**
  * DELETE /range/{id}
