@@ -5,4 +5,5 @@ module.exports = Joi.object({
     street_address: Joi.string().required(),
     zip_code: Joi.string().required(),
     city: Joi.string().required(),
-}).min(4);
+    country: Joi.string().required()
+}).min(5).max(5);

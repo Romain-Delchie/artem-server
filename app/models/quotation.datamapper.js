@@ -16,6 +16,7 @@ module.exports = class Quotation extends CoreDatamapper {
     address.street_address AS street_address,
     address.zip_code AS zip_code,
     address.city AS city,
+    address.country AS country,
       (
         SELECT JSON_ARRAYAGG(
           JSON_OBJECT(

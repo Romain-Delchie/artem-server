@@ -11,6 +11,7 @@ module.exports = Joi.object({
   idToValidate: Joi.number().integer(),
   billing_address_id: Joi.number().integer(),
   delivery_standard_id: Joi.number().integer(),
+  country: Joi.string(),
   siret: Joi.string().pattern(/^[0-9]{14}$/),
   role: Joi.string().valid('admin', 'user'),
   profile_id: Joi.number().integer(),

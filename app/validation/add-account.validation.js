@@ -11,6 +11,7 @@ module.exports = Joi.object({
   billing_address_id: Joi.number().integer().strict().required(),
   delivery_standard_id: Joi.number().integer().strict().required(),
   company: Joi.string().required(),
+  country: Joi.string().required(),
   siret: Joi.string().pattern(/^[0-9]{14}$/).required(),
   profile_id: Joi.number().integer().strict().required(),
   phone_number: Joi.string().pattern(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/).required()

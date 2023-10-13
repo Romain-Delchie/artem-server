@@ -14,6 +14,7 @@ module.exports = class Account extends CoreDatamapper {
       account.verified as verified,
       account.email_token as email_token,
       account.phone_number as phone_number,
+      account.country as country,
       account.role as role,
       account.profile_id as profile_id,
       ( SELECT
@@ -22,7 +23,8 @@ module.exports = class Account extends CoreDatamapper {
         'name_address', billing_address.name_address,
         'street_address', billing_address.street_address,
         'zip_code', billing_address.zip_code,
-        'city', billing_address.city
+        'city', billing_address.city,
+        'country', billing_address.country
         )
       FROM address AS billing_address
       WHERE account.billing_address_id = billing_address.id
@@ -33,7 +35,8 @@ module.exports = class Account extends CoreDatamapper {
         'name_address', delivery_standard.name_address,
         'street_address', delivery_standard.street_address,
         'zip_code', delivery_standard.zip_code,
-        'city', delivery_standard.city
+        'city', delivery_standard.city,
+        'country', delivery_standard.country
     ) AS delivery_standard,
       JSON_ARRAYAGG(
           JSON_OBJECT(
@@ -41,7 +44,8 @@ module.exports = class Account extends CoreDatamapper {
               'name_address', delivery_address.name_address,
               'street_address', delivery_address.street_address,
               'zip_code', delivery_address.zip_code,
-              'city', delivery_address.city
+              'city', delivery_address.city,
+              'country', delivery_address.country
           )
       ) AS deliveries
   FROM ${this.tableName}
