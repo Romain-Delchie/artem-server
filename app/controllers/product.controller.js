@@ -5,7 +5,8 @@ const debug = require('debug')('artem:product.controller');
 const productController = {
 
   async getProducts(req, res) {
-    const products = await product.findAll();
+    const products = await product.findAllProducts();
+    console.log(products);
     return res.json(products);
 
   },
