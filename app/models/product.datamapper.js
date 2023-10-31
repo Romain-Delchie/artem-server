@@ -19,8 +19,9 @@ module.exports = class Product extends CoreDatamapper {
 
   async findAllByRange(id) {
     const preparedQuery =
-      `SELECT *
+      `SELECT product.*, range.minPrice as minPrice
     FROM ${this.tableName}
+    JOIN \`range\` ON product.range_id = range.id
     WHERE product.range_id = ?`;
 
     const result = await this.client.query(preparedQuery, [id]);

@@ -27,11 +27,14 @@ module.exports = class Quotation extends CoreDatamapper {
             'delivery_time', product.delivery_time,
             'weight', product.weight,
             'quantity', quotation_has_product.quantity,
-            'quotation_has_product_id', quotation_has_product.id
+            'quotation_has_product_id', quotation_has_product.id,
+            'coeff', product.coeff,
+            'minPrice', \`range\`.minPrice
           )
         )
         FROM product
         INNER JOIN quotation_has_product ON product.id = quotation_has_product.product_id
+        INNER JOIN \`range\` ON product.range_id = range.id
         WHERE quotation_has_product.quotation_id = quotation.id
       ) AS products
     FROM ${this.tableName}

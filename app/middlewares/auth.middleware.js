@@ -15,6 +15,9 @@ module.exports = {
 
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      if (decodedToken.exp && Date.now() / 1000 > decodedToken.exp) {
+        throw new ArtemError('Token has expired, authorization denied', 401);
+      }
       req.userId = decodedToken.id;
       req.userRole = decodedToken.role;
       req.userEmail = decodedToken.email;
