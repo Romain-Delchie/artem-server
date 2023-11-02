@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
 module.exports = Joi.object({
+  coeff: Joi.number().precision(2),
   reference: Joi.string(),
   active: Joi.boolean(),
   name: Joi.string(),
