@@ -71,4 +71,6 @@ accountRouter.route('/find-by-token/:token').get(controllerWrapper(accountContro
 
 accountRouter.route('/validation').get(authMiddleware.checkToken, controllerWrapper(accountController.findAccountToValidate));
 
+accountRouter.route('/all').get(authMiddleware.checkToken, controllerWrapper(accountController.getAllAccounts));
+
 module.exports = accountRouter;

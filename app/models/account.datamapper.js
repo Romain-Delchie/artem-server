@@ -61,6 +61,37 @@ module.exports = class Account extends CoreDatamapper {
     return result[0];
   }
 
+  async findAllCompletelyAccount() {
+    const preparedQuery =
+      `SELECT
+      account.id as id,
+      account.company as company,
+      account.firstname as firstname,
+      account.lastname as lastname,
+      account.email as email,
+      account.verified as verified,
+      account.phone_number as phone_number,
+      account.role as role,
+      account.siret as siret,
+      billing_address.id as billing_address_id,
+      billing_address.name_address as billing_name_address,
+      billing_address.street_address as billing_street_address,
+      billing_address.zip_code as billing_zip_code,
+      billing_address.city as billing_city,
+      billing_address.country as billing_country,
+      profile.id as profile_id,
+      profile.name as profile_name      
+  FROM ${this.tableName}
+  LEFT JOIN address AS billing_address ON account.billing_address_id = billing_address.id
+  LEFT JOIN profile ON account.profile_id = profile.id
+  GROUP BY account.id`;
+    const result = await this.client.query(preparedQuery);
+    if (!result) {
+      return [];
+    }
+    return result;
+  }
+
 
   async findByEmail(email) {
 

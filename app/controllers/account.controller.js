@@ -19,6 +19,13 @@ const accountController = {
     }
     return res.json(accountConnected);
   },
+
+  async getAllAccounts(req, res) {
+    const allAccounts = await account.findAllCompletelyAccount();
+    return res.json(allAccounts);
+  },
+
+
   /**
    * @summary Met à jour les infos du compte de l'utilisateur connecté
    */
