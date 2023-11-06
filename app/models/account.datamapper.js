@@ -73,6 +73,7 @@ module.exports = class Account extends CoreDatamapper {
       account.phone_number as phone_number,
       account.role as role,
       account.siret as siret,
+      DATE_FORMAT(account.last_connection, '%d/%m/%Y') as last_connection,
       billing_address.id as billing_address_id,
       billing_address.name_address as billing_name_address,
       billing_address.street_address as billing_street_address,

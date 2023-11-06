@@ -72,8 +72,9 @@ const accountController = {
   },
 
   async deleteAccount(req, res) {
-    const { userId } = req;
-    const deletedAccount = await account.delete(userId);
+    const { id } = req.params;
+    console.log(id);
+    const deletedAccount = await account.delete(id);
     if (deletedAccount.length === 0) {
       return res.status(204).end();
     }

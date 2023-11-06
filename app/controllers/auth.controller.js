@@ -30,6 +30,11 @@ const authController = {
       debug(`user ${email} invalid password`);
       throw new ArtemError('Unable to login with credentials provided', 401);
     }
+
+    // Mettre à jour la date de dernière connexion
+    const currentDate = new Date();
+    await account.update({ id: user.id, last_connection: currentDate });
+
     // générer et renvoyer un token jwt
     const token = jwt.sign({
       id: user.id,

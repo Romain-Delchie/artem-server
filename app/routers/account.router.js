@@ -53,15 +53,15 @@ accountRouter.route('/')
   * @return {account} 200 - Les données du compte de l’utilisateur après modification
   * @return {object} 400 - Erreur de validation des données en entrée
   */
-  .patch(authMiddleware.checkToken, validate(updateAccountSchema, 'body'), controllerWrapper(accountController.updateAccount))
-  /**
-  *DELETE /account
-  * @tags Account
-  * @summary Suppression du compte de l’utilisateur connecté
-  * @return {object} 204 - Compte supprimé
-  * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce compte
-  */
-  .delete(authMiddleware.checkToken, controllerWrapper(accountController.deleteAccount));
+  .patch(authMiddleware.checkToken, validate(updateAccountSchema, 'body'), controllerWrapper(accountController.updateAccount));
+/**
+*DELETE /account
+* @tags Account
+* @summary Suppression du compte de l’utilisateur connecté
+* @return {object} 204 - Compte supprimé
+* @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce compte
+*/
+accountRouter.route('/:id(\\d+)').delete(authMiddleware.checkToken, controllerWrapper(accountController.deleteAccount));
 
 accountRouter.route('/verify-email/').post(controllerWrapper(accountController.verifyEmail));
 
