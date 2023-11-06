@@ -41,7 +41,7 @@ var corsOptions = {
 // Activer express-jsdoc-swagger
 expressJsDocSwagger(app)(options);
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
