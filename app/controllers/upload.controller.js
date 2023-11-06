@@ -4,7 +4,7 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../artem-website/public/images/products');
+        cb(null, '../artem-website/dist/images/products');
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 const pdfStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         // Destination pour les fichiers PDF
-        cb(null, '../artem-website/public/technicalSheet');
+        cb(null, '../artem-website/dist/technicalSheet');
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
