@@ -26,7 +26,6 @@ const rangeController = {
 
   async patchRange(req, res) {
     const rangeToPatch = await range.findByPk(req.params.id);
-    console.log(rangeToPatch)
     if (!rangeToPatch) {
       res.status(404).json({ range: null });
     }

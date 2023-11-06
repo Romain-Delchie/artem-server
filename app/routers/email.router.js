@@ -67,7 +67,6 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
 // Route pour reset mdp
 emailRouter.post('/forgot-password', async (req, res) => {
     const { email } = req.body;
-    console.log(req.body)
     const resetToken = crypto.randomBytes(32).toString('hex');
     const accountUser = await account.findByEmail(email)
     if (!accountUser) {

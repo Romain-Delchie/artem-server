@@ -60,6 +60,6 @@ rangeRouter.route('/:id(\\d+)')
  * @return {object} 204 - La gamme a été supprimée
  * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer cette gamme
  */
-  .delete(controllerWrapper(rangeController.deleteRange));
+  .delete(authMiddleware.checkToken, controllerWrapper(rangeController.deleteRange));
 
 module.exports = rangeRouter;

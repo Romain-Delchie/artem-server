@@ -14,7 +14,6 @@ const rangeHasTechsheetController = {
     },
 
     async deleteRangeHasTechsheet(req, res) {
-        console.log(req.query);
         const rangeHasTechsheetToDelete = await rangeHasTechsheet.findOneRHT({ ...req.query });
         if (!rangeHasTechsheetToDelete) {
             throw new ArtemError('RangeHasTechsheet not found', 404);

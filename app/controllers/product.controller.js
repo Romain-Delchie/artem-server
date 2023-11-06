@@ -6,7 +6,6 @@ const productController = {
 
   async getProducts(req, res) {
     const products = await product.findAllProducts();
-    console.log(products);
     return res.json(products);
 
   },

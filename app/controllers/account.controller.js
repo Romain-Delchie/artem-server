@@ -73,7 +73,6 @@ const accountController = {
 
   async deleteAccount(req, res) {
     const { id } = req.params;
-    console.log(id);
     const deletedAccount = await account.delete(id);
     if (deletedAccount.length === 0) {
       return res.status(204).end();
@@ -83,9 +82,7 @@ const accountController = {
 
   async verifyEmail(req, res) {
     const { code } = req.body;
-    console.log(typeof code);
     const verified = await account.findByEmailToken(code);
-    console.log(verified);
 
     if (verified) {
       account.update({ id: verified.id, verified: true });
@@ -97,9 +94,7 @@ const accountController = {
 
   async updatePassword(req, res) {
     const { password, code } = req.body;
-    console.log(password);
     const hashedPassword = await hashPassword(password);
-    console.log(hashedPassword);
     const accountToUpdate = await account.findByResetToken(code);
     if (accountToUpdate) {
       account.update({ id: accountToUpdate.id, password: hashedPassword });
