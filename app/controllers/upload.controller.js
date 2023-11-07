@@ -1,6 +1,9 @@
 
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+const pdfUploadDirectory = '../artem-website/dist/technicalSheet';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -86,6 +89,30 @@ const uploadController = {
             res.status(500).json({ error: 'Une erreur s\'est produite lors du téléversement du fichier PDF' });
         }
     },
+
+
+    async deletePdf(req, res) {
+        const { filename } = req.params;
+        if (!filename) {
+            return res.status(400).json({ error: 'Nom de fichier manquant' });
+        }
+
+        const filePath = path.join(pdfUploadDirectory, filename);
+
+        // Vérifiez si le fichier existe
+        if (fs.existsSync(filePath)) {
+            try {
+                // Supprimez le fichier
+                fs.unlinkSync(filePath);
+                res.status(200).json({ message: 'Fichier PDF supprimé avec succès' });
+            } catch (error) {
+                console.error('Une erreur s\'est produite lors de la suppression du fichier PDF :', error);
+                res.status(500).json({ error: 'Une erreur s\'est produite lors de la suppression du fichier PDF' });
+            }
+        } else {
+            res.status(404).json({ error: 'Le fichier PDF n\'existe pas' });
+        }
+    }
 };
 
 module.exports = uploadController;

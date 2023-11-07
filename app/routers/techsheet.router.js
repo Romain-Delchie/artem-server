@@ -9,4 +9,6 @@ techsheetRouter.route('/')
     .get(authMiddleware.checkToken, controllerWrapper(techsheetController.getTechsheets))
     .post(authMiddleware.checkToken, controllerWrapper(techsheetController.addTechsheet));
 
+techsheetRouter.route('/:id').delete(authMiddleware.checkToken, controllerWrapper(techsheetController.deleteTechsheet));
+
 module.exports = techsheetRouter;

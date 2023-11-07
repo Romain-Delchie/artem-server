@@ -11,6 +11,19 @@ const techsheetController = {
     async addTechsheet(req, res) {
         const newTechsheet = await techsheet.create({ ...req.body });
         return res.status(201).json({ newTechsheet });
+    },
+
+    async deleteTechsheet(req, res) {
+        const { id } = req.params;
+        console.log(id);
+        const techsheetToDelete = await techsheet.findByPk(id);
+        console.log(techsheetToDelete);
+        if (!techsheetToDelete) {
+            throw new ArtemError(404, 'Techsheet not found');
+        }
+        await techsheet.delete(id);
+        return res.status(204).json();
+
     }
 
 }
