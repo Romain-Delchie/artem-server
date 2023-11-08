@@ -15,9 +15,7 @@ const techsheetController = {
 
     async deleteTechsheet(req, res) {
         const { id } = req.params;
-        console.log(id);
         const techsheetToDelete = await techsheet.findByPk(id);
-        console.log(techsheetToDelete);
         if (!techsheetToDelete) {
             throw new ArtemError(404, 'Techsheet not found');
         }

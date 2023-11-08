@@ -28,7 +28,7 @@ const authController = {
     // Si il est invalide renvoyer une erreur
     if (!validPassword) {
       debug(`user ${email} invalid password`);
-      throw new ArtemError('Unable to login with credentials provided', 401);
+      throw new ArtemError('invalid password', 401);
     }
 
     // Mettre à jour la date de dernière connexion
