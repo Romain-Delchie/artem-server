@@ -74,7 +74,7 @@ emailRouter.post('/forgot-password', async (req, res) => {
     }
     account.update({ id: accountUser.id, reset_token: resetToken })
 
-    const validationLink = `http://www.artem-fr.com/reset-password/${resetToken}`; // Remplacez par le vrai lien de validation
+    const validationLink = `https://www.artem-fr.com/reset-password/${resetToken}`; // Remplacez par le vrai lien de validation
 
     try {
 
@@ -101,7 +101,7 @@ emailRouter.post('/forgot-password', async (req, res) => {
 
 emailRouter.post('/validation', authMiddleware.checkToken, async (req, res) => {
     const { email, firstname, email_token } = req.body;
-    const validationLink = `http://wwww.artem-fr.com/confirm-email/${email_token}`;
+    const validationLink = `https://wwww.artem-fr.com/confirm-email/${email_token}`;
 
     try {
         const imageAttachment = {
