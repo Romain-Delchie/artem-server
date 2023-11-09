@@ -6,6 +6,8 @@ const emailRouter = express.Router();
 const authMiddleware = require('../middlewares/auth.middleware');
 const { resetPassword } = require('../utils/mailing/resetPassword');
 const { confirmationEmail } = require('../utils/mailing/confirmationEmail');
+const { newUserEmail } = require('../utils/mailing/newUserEmail');
+const { confirmationRoleValidate } = require('../utils/mailing/confirmationRoleValidate');
 const { account } = require('../models/index.datamapper');
 
 
@@ -123,6 +125,56 @@ emailRouter.post('/validation', authMiddleware.checkToken, async (req, res) => {
         console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
         res.status(500).json({ error: 'Erreur lors de l\'envoi de l\'e-mail' });
     }
+});
+
+emailRouter.post('/new-user', async (req, res) => {
+    try {
+        const imageAttachment = {
+            filename: 'logo1.jpg',
+            path: 'images/logo1.jpg',
+            cid: 'logo'
+        };
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_RECEIVER,
+            bcc: 'romain.delchie@artem-fr.com',
+            subject: `Nouvel utilisateur sur le site Artem`,
+            html: newUserEmail(),
+            attachments: [imageAttachment],
+        };
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: 'E-mail envoyé avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
+        res.status(500).json({ error: 'Erreur lors de l\'envoi de l\'e-mail' });
+    }
+
+});
+
+emailRouter.post('/role-validation', async (req, res) => {
+    const { email, firstname } = req.body;
+    try {
+        const imageAttachment = {
+            filename: 'logo1.jpg',
+            path: 'images/logo1.jpg',
+            cid: 'logo'
+        };
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: `Accès total au site Artem`,
+            html: confirmationRoleValidate(firstname),
+            attachments: [imageAttachment],
+        };
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: 'E-mail envoyé avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
+        res.status(500).json({ error: 'Erreur lors de l\'envoi de l\'e-mail' });
+    }
+
 });
 
 
