@@ -103,7 +103,7 @@ emailRouter.post('/forgot-password', async (req, res) => {
 
 emailRouter.post('/validation', authMiddleware.checkToken, async (req, res) => {
     const { email, firstname, email_token } = req.body;
-    const validationLink = `https://wwww.artem-fr.com/confirm-email/${email_token}`;
+    const validationLink = `https://www.artem-fr.com/confirm-email/${email_token}`;
 
     try {
         const imageAttachment = {
