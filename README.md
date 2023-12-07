@@ -6,10 +6,6 @@
 
 
 
-[![FrontEnd][FrontEnd-shield]][FrontEnd-url]
-
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -21,9 +17,15 @@
   <p align="center">
     Artem mysql database API
     <br />
+    using by
 </div>
 
 
+
+<div align="center">
+
+[![FrontEnd][FrontEnd-shield]][FrontEnd-url]
+</div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
