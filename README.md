@@ -26,8 +26,8 @@
 
 [![FrontEnd][FrontEnd-shield]][FrontEnd-url]
 </div>
+</br>
 
-<!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -41,7 +41,7 @@
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
-
+<br />
 ## About The Project
 
 The Artem Database API has been developed to streamline communication between the Artem website frontend and the underlying database. This API facilitates retrieval, update, addition, and deletion of data, offering a robust and secure interface to access necessary information.

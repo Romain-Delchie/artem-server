@@ -22,6 +22,7 @@ module.exports = class Account extends CoreDatamapper {
             'id', billing_address.id,
         'name_address', billing_address.name_address,
         'street_address', billing_address.street_address,
+        'street_other', billing_address.street_other,
         'zip_code', billing_address.zip_code,
         'city', billing_address.city,
         'country', billing_address.country
@@ -34,6 +35,7 @@ module.exports = class Account extends CoreDatamapper {
         'id', delivery_standard.id,
         'name_address', delivery_standard.name_address,
         'street_address', delivery_standard.street_address,
+        'street_other', delivery_standard.street_other,
         'zip_code', delivery_standard.zip_code,
         'city', delivery_standard.city,
         'country', delivery_standard.country
@@ -43,6 +45,7 @@ module.exports = class Account extends CoreDatamapper {
               'id', delivery_address.id,
               'name_address', delivery_address.name_address,
               'street_address', delivery_address.street_address,
+              'street_other', delivery_address.street_other,
               'zip_code', delivery_address.zip_code,
               'city', delivery_address.city,
               'country', delivery_address.country
@@ -77,6 +80,7 @@ module.exports = class Account extends CoreDatamapper {
       billing_address.id as billing_address_id,
       billing_address.name_address as billing_name_address,
       billing_address.street_address as billing_street_address,
+      billing_address.street_other as billing_street_other,
       billing_address.zip_code as billing_zip_code,
       billing_address.city as billing_city,
       billing_address.country as billing_country,

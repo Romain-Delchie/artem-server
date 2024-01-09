@@ -22,6 +22,7 @@ addressRouter.route('/')
    * @summary crait une adresse
    * @param  {string} body.name_address.required - nom de l'adresse
    * @param  {string} body.street_address.required - La rue de l'adresse
+   * @param  {string} body.street_other - Le complement d'adresse
    * @param  {string} body.zip_code.required - Le code postal de l'adresse
    * @param  {string} body.city.required - La ville de l'adresse
    * @return {address} 201 - address : l'adresse créée
@@ -45,6 +46,7 @@ addressRouter.route('/:id(\\d+)')
    * @summary Met à jour une adresse
    * @param  {string} body.name_address.required - nom de l'adresse
    * @param  {string} body.street_address.required - La rue de l'adresse
+   * @param  {string} body.street_other - Le complement d'adresse
    * @param  {string} body.zip_code.required - Le code postal de l'adresse
    * @param  {string} body.city.required - La ville de l'adresse
    * @return {address} 200 - L'adresse a été mise à jour

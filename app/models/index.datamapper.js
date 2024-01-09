@@ -8,6 +8,7 @@ const Address = require('./address.datamapper');
 const QuotationHasProduct = require('./quotationHasProduct.datamapper');
 const Techsheet = require('./techsheet.datamapper');
 const RangeHasTechsheet = require('./rangeHasTechsheet.datamapper');
+const Presentation = require('./presentation.datamapper');
 
 
 module.exports = {
@@ -20,4 +21,5 @@ module.exports = {
   quotationHasProduct: new QuotationHasProduct(pool),
   techsheet: new Techsheet(pool),
   rangeHasTechsheet: new RangeHasTechsheet(pool),
+  presentation: new Presentation(pool),
 };
