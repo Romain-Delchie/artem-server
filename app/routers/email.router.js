@@ -9,6 +9,7 @@ const { confirmationEmail } = require('../utils/mailing/confirmationEmail');
 const { newUserEmail } = require('../utils/mailing/newUserEmail');
 const { confirmationRoleValidate } = require('../utils/mailing/confirmationRoleValidate');
 const { account } = require('../models/index.datamapper');
+const { log } = require('console');
 
 
 
@@ -41,11 +42,10 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
             <p>Adresse e-mail client : ${email}</p>
             <p>Numéro de téléphone client : ${phoneNumber}</p>
             <p>Produits : </p>
-            ${products.map(product => `<p>${product.reference} - Quantité : ${product.quantity}</p>`)}
-            <p>Montant HT : ${quote.total_price} €</p>
+            ${products.map(product => `<p>${product.reference} - Quantité : ${product.quantity} - PUHT : ${product.priceWithCoeff}</p>`)}
             <p>Montant transport HT : ${transport} €</p>
             <p>Montant livraison dépôt ou chez le client du client : ${clicli} €</p>
-            <p>Montant total HT : ${quote.total_price + transport + clicli} €</p>
+            <p>Montant total HT : ${(quote.totalPrice + transport + clicli).toFixed(2)} €</p>
             <p>Délai: au plus tôt</p>
             
             <p>Adresse de livraison :</p>
