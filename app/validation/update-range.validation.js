@@ -7,5 +7,5 @@ module.exports = Joi.object({
   minPrice: Joi.number().precision(2),
   image_link: Joi.string(),
   id: Joi.number().integer().min(1),
-  searchFilter: Joi.boolean(),
+  searchFilter: Joi.boolean()
 }).min(2);

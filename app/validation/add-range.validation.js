@@ -6,5 +6,5 @@ module.exports = Joi.object({
   image_link: Joi.string().required(),
   category: Joi.string().required(),
   minPrice: Joi.number().precision(2).required(),
-  searchFilter: Joi.boolean().required(),
+  searchFilter: Joi.number().required()
 }).min(6).max(6);

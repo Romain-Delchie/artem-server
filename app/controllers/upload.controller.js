@@ -36,9 +36,9 @@ const uploadController = {
             // Utilisez le middleware Multer pour gérer le téléversement du fichier
             upload.single('image')(req, res, function (err) {
                 if (err instanceof multer.MulterError) {
-                    return res.status(400).json({ error: 'Erreur lors du téléversement du fichier' });
+                    return res.status(400).json({ error: 'Erreur lors du téléversement du fichier', err });
                 } else if (err) {
-                    return res.status(500).json({ error: 'Une erreur s\'est produite lors du téléversement du fichier' });
+                    return res.status(500).json({ error: 'Une erreur s\'est produite lors du téléversement du fichier', err });
                 }
 
                 // Vérifiez si un fichier a été téléversé
