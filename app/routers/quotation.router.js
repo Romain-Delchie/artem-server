@@ -63,7 +63,7 @@ quotationRouter.route('/:id(\\d+)')
  */
   .delete(controllerWrapper(quotationController.deleteQuotation));
 
-
+quotationRouter.route('/all').get(authMiddleware.checkToken, controllerWrapper(quotationController.getAllQuotations));
 
 
 module.exports = quotationRouter;
