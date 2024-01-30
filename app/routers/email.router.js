@@ -31,8 +31,13 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
 
         const { quote, company, email, phoneNumber, zipCode } = req.body;
         const products = quote.products
-        const transport = quote.transport ? quote.transport : 0
+        const transport = quote.transport ? quote.transport === "Nous consulter" ? "Port" : quote.transport : 0
         const clicli = quote.clicli ? quote.clicli : 0
+        const total = transport === "Port" ? (quote.totalPrice + clicli).toFixed(2) + " + Port" : (quote.totalPrice + transport + clicli).toFixed(2)
+        console.log(quote);
+        console.log(transport);
+        console.log(clicli);
+        console.log(total);
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: process.env.EMAIL_RECEIVER, email,
@@ -45,7 +50,7 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
             ${products.map(product => `<p>${product.reference} - Quantité : ${product.quantity} - PUHT : ${product.priceWithCoeff}</p>`)}
             <p>Montant transport HT : ${transport} €</p>
             <p>Montant livraison dépôt ou chez le client du client : ${clicli} €</p>
-            <p>Montant total HT : ${(quote.totalPrice + transport + clicli).toFixed(2)} €</p>
+            <p>Montant total HT : ${total} €</p>
             <p>Délai: au plus tôt</p>
             
             <p>Adresse de livraison :</p>

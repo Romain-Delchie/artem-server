@@ -11,6 +11,7 @@ module.exports = class Quotation extends CoreDatamapper {
       DATE_FORMAT(quotation.expiration_date, '%d/%m/%Y') AS expiration_date,
       quotation.shipment AS shipment,
       quotation.reference AS reference,
+      quotation.ordered AS ordered,
       address.id AS delivery_id,
       address.name_address AS name_address,
     address.street_address AS street_address,
@@ -61,6 +62,7 @@ module.exports = class Quotation extends CoreDatamapper {
       DATE_FORMAT(quotation.expiration_date, '%d/%m/%Y') AS expiration_date,
       quotation.shipment AS shipment,
       quotation.reference AS reference,
+      quotation.ordered AS ordered,
       address.id AS delivery_id,
       (
         SELECT JSON_ARRAYAGG(
@@ -104,6 +106,7 @@ module.exports = class Quotation extends CoreDatamapper {
       DATE_FORMAT(quotation.expiration_date, '%d/%m/%Y') AS expiration_date,
       quotation.shipment AS shipment,
       quotation.reference AS reference,
+      quotation.ordered AS ordered,
       address.id AS delivery_id,
       address.name_address AS name_address,
     address.street_address AS street_address,
