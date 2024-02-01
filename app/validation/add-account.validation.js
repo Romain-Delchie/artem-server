@@ -4,7 +4,8 @@ module.exports = Joi.object({
   email: Joi.string()
     .email().required(),
   password: Joi.string()
-    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/).required(),
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+_\-/;.,!])[A-Za-z\d@$!%*?&+_\-/;.,!]{8,}$/
+).required(),
   repeat_password: Joi.ref('password'),
   lastname: Joi.string().required(),
   firstname: Joi.string().required(),
