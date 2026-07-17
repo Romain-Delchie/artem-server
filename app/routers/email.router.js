@@ -34,18 +34,19 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
         const transport = quote.transport ? quote.transport === "Nous consulter" ? "Port" : quote.transport : 0
         const clicli = quote.clicli ? quote.clicli : 0
         const total = transport === "Port" ? (quote.totalPrice).toFixed(2) + " + Port" : (quote.totalPrice).toFixed(2)
-
+        console.log(quote);
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_RECEIVER, email,
-            bcc: 'romaindelchie@yahoo.fr',
-            subject: `Commande Web de ${company} ${zipCode}`,
-            html: `<h1>Commande de ${company} ${zipCode} du devis ${quote.quotation_id} via www.artem-fr.com</h1>
+          from: process.env.EMAIL_USER,
+          to: `${process.env.EMAIL_RECEIVER}, ${email}, commande@artem-fr.com`,
+          bcc: "romaindelchie@yahoo.fr",
+          subject: `Commande Web de ${company} ${zipCode}`,
+          html: `<h1>Commande de ${company} ${zipCode} du devis ${quote.quotation_id} via www.artem-fr.com</h1>
           
             <p>Adresse e-mail client : ${email}</p>
             <p>Numéro de téléphone client : ${phoneNumber}</p>
+            <p>Référence : ${quote.reference}</p>
             <p>Produits : </p>
-            ${products.map(product => `<p>${product.reference} - Quantité : ${product.quantity} - PUHT : ${product.priceWithCoeff}</p>`)}
+            ${products.map((product) => `<p>${product.reference} - Quantité : ${product.quantity} - PUHT : ${product.priceWithCoeff}</p>`)}
             <p>Montant transport HT : ${transport} €</p>
             <p>Montant livraison dépôt ou chez le client du client : ${clicli} €</p>
             <p>Montant total HT : ${total} €</p>
@@ -55,8 +56,7 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
             <p>${quote.name_address}</p>
             <p>${quote.street_address}</p>
             <p>${quote.zip_code} ${quote.city}</p>
-        `
-
+        `,
         };
 
         await transporter.sendMail(mailOptions);
