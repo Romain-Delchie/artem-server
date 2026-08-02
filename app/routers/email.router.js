@@ -34,11 +34,9 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
         const transport = quote.transport ? quote.transport === "Nous consulter" ? "Port" : quote.transport : 0
         const clicli = quote.clicli ? quote.clicli : 0
         const total = transport === "Port" ? (quote.totalPrice).toFixed(2) + " + Port" : (quote.totalPrice).toFixed(2)
-        console.log(quote);
         const mailOptions = {
           from: process.env.EMAIL_USER,
           to: `${process.env.EMAIL_RECEIVER}, ${email}, commande@artem-fr.com`,
-          bcc: "romaindelchie@yahoo.fr",
           subject: `Commande Web de ${company} ${zipCode}`,
           html: `<h1>Commande de ${company} ${zipCode} du devis ${quote.quotation_id} via www.artem-fr.com</h1>
           
@@ -141,7 +139,6 @@ emailRouter.post('/new-user', async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: process.env.EMAIL_RECEIVER,
-            bcc: 'romaindelchie@yahoo.fr',
             subject: `Nouvel utilisateur sur le site Artem`,
             html: newUserEmail(),
             attachments: [imageAttachment],
