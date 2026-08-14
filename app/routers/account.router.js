@@ -61,7 +61,17 @@ accountRouter.route('/')
 * @return {object} 204 - Compte supprimé
 * @return {object} 403 - L'utilisateur n'a pas les droits pour supprimer ce compte
 */
-accountRouter.route('/:id(\\d+)').delete(authMiddleware.checkToken, controllerWrapper(accountController.deleteAccount));
+accountRouter
+  .route("/:id(\\d+)")
+  .get(
+    authMiddleware.checkToken,
+    controllerWrapper(accountController.getOneAccount),
+  )
+  .delete(
+    authMiddleware.checkToken,
+    controllerWrapper(accountController.deleteAccount),
+  );
+  
 
 accountRouter.route('/verify-email/').post(controllerWrapper(accountController.verifyEmail));
 

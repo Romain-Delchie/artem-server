@@ -20,6 +20,14 @@ const accountController = {
     return res.json(accountConnected);
   },
 
+  async getOneAccount(req, res) {
+    const oneAccount = await account.findByPk(req.params.id);
+    if (!oneAccount) {
+       throw new ArtemError("account not found", 404);
+    }
+    return res.json(oneAccount);
+  },
+
   async getAllAccounts(req, res) {
     const allAccounts = await account.findAllCompletelyAccount();
     return res.json(allAccounts);
