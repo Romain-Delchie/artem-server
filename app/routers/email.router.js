@@ -11,7 +11,15 @@ const { confirmationRoleValidate } = require('../utils/mailing/confirmationRoleV
 const { account } = require('../models/index.datamapper');
 const { log } = require('console');
 
-
+// Fonction pour sécuriser les données avant de les mettre dans du HTML
+const escapeHtml = (value = '') => {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+};
 
 
 // Configuration de Nodemailer
@@ -62,6 +70,249 @@ emailRouter.post('/order', authMiddleware.checkToken, async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
         res.status(500).json({ error: 'Erreur lors de l\'envoi de l\'e-mail' });
+    }
+});
+
+
+
+// Route pour envoyer le message du formulaire de contact
+emailRouter.post('/contact', async (req, res) => {
+    try {
+        const {
+            name,
+            company,
+            email,
+            phone,
+            message
+        } = req.body;
+
+
+        // ==========================================
+        // 1. VALIDATION
+        // ==========================================
+
+        if (!name || !email || !message) {
+            return res.status(400).json({
+                error: 'Les champs nom, email et message sont obligatoires'
+            });
+        }
+
+        // Nettoyage des espaces inutiles
+        const cleanName = String(name).trim();
+        const cleanCompany = String(company || '').trim();
+        const cleanEmail = String(email).trim();
+        const cleanPhone = String(phone || '').trim();
+        const cleanMessage = String(message).trim();
+
+
+        // Vérification de l'adresse email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(cleanEmail)) {
+            return res.status(400).json({
+                error: 'Adresse email invalide'
+            });
+        }
+
+
+        // Limitation de la taille des champs
+        if (cleanName.length > 100) {
+            return res.status(400).json({
+                error: 'Le nom est trop long'
+            });
+        }
+
+        if (cleanCompany.length > 150) {
+            return res.status(400).json({
+                error: 'Le nom de la société est trop long'
+            });
+        }
+
+        if (cleanEmail.length > 254) {
+            return res.status(400).json({
+                error: 'L\'adresse email est trop longue'
+            });
+        }
+
+        if (cleanPhone.length > 30) {
+            return res.status(400).json({
+                error: 'Le numéro de téléphone est trop long'
+            });
+        }
+
+        if (cleanMessage.length > 5000) {
+            return res.status(400).json({
+                error: 'Le message est trop long'
+            });
+        }
+
+
+        // ==========================================
+        // 2. ÉCHAPPEMENT HTML
+        // ==========================================
+
+        const safeName = escapeHtml(cleanName);
+        const safeCompany = escapeHtml(cleanCompany);
+        const safeEmail = escapeHtml(cleanEmail);
+        const safePhone = escapeHtml(cleanPhone);
+        const safeMessage = escapeHtml(cleanMessage)
+            .replace(/\r?\n/g, '<br>');
+
+
+        // ==========================================
+        // 3. EMAIL POUR ARTEM
+        // ==========================================
+
+        const mailToArtem = {
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_RECEIVER,
+            replyTo: cleanEmail,
+
+            subject: `Nouveau message de contact - ${cleanName}`,
+
+            html: `
+                <h1>Nouveau message depuis le formulaire de contact</h1>
+
+                <p>
+                    <strong>Nom :</strong> ${safeName}
+                </p>
+
+                <p>
+                    <strong>Société :</strong>
+                    ${safeCompany || 'Non renseignée'}
+                </p>
+
+                <p>
+                    <strong>Email :</strong> ${safeEmail}
+                </p>
+
+                <p>
+                    <strong>Téléphone :</strong>
+                    ${safePhone || 'Non renseigné'}
+                </p>
+
+                <h2>Message :</h2>
+
+                <p>
+                    ${safeMessage}
+                </p>
+
+                <hr>
+
+                <p>
+                    Message envoyé depuis le formulaire de contact
+                    de www.artem-fr.com
+                </p>
+            `
+        };
+
+
+        // Envoi du message principal
+        await transporter.sendMail(mailToArtem);
+
+
+        // ==========================================
+        // 4. EMAIL DE CONFIRMATION AU CLIENT
+        // ==========================================
+
+        try {
+
+            const mailToClient = {
+                from: process.env.EMAIL_USER,
+                to: cleanEmail,
+
+                subject: 'Confirmation de votre demande - Artem',
+
+                html: `
+                    <h1>Bonjour,</h1>
+
+                    <p>
+                        Nous avons bien reçu votre message et vous en remercions.
+                    </p>
+
+                    <p>
+                        Notre équipe va prendre connaissance de votre demande
+                        et reviendra vers vous dans les meilleurs délais.
+                    </p>
+
+                    <hr>
+
+                    <h2>Récapitulatif de votre demande</h2>
+
+                    <p>
+                        <strong>Nom :</strong> ${safeName}
+                    </p>
+
+                    <p>
+                        <strong>Société :</strong>
+                        ${safeCompany || 'Non renseignée'}
+                    </p>
+
+                    <p>
+                        <strong>Email :</strong> ${safeEmail}
+                    </p>
+
+                    <p>
+                        <strong>Téléphone :</strong>
+                        ${safePhone || 'Non renseigné'}
+                    </p>
+
+                    <h3>Votre message :</h3>
+
+                    <p>
+                        ${safeMessage}
+                    </p>
+
+                    <hr>
+
+                    <p>
+                        Cordialement,<br>
+                        <strong>L'équipe Artem</strong>
+                    </p>
+
+                    <p>
+                        <a href="https://www.artem-fr.com">
+                            www.artem-fr.com
+                        </a>
+                    </p>
+                `
+            };
+
+
+            await transporter.sendMail(mailToClient);
+
+        } catch (confirmationError) {
+
+            // Le mail Artem a bien été envoyé.
+            // Si l'accusé de réception échoue, on ne considère
+            // pas la demande comme échouée.
+
+            console.error(
+                "Le message a été envoyé à Artem, mais l'accusé de réception client a échoué :",
+                confirmationError
+            );
+        }
+
+
+        // ==========================================
+        // 5. RÉPONSE AU FRONTEND
+        // ==========================================
+
+        return res.status(200).json({
+            message: 'Message envoyé avec succès'
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur lors de l'envoi du message de contact :",
+            error
+        );
+
+        return res.status(500).json({
+            error: "Erreur lors de l'envoi de l'e-mail"
+        });
     }
 });
 
