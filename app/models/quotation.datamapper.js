@@ -116,6 +116,7 @@ module.exports = class Quotation extends CoreDatamapper {
     address.country AS country,
     account.id AS account_id,
     account.profile_id AS account_profile_id,
+    account.delivery_standard_id AS account_delivery_standard_id,
     account.lastname AS account_name,
     account.company AS account_company,
       (
